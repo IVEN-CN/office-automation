@@ -1,5 +1,6 @@
 import cv2
 import os
+from skimage.metrics import structural_similarity
 
 def get_file_path(file_dir) -> list:
     """获取相对路径下文件夹的所有文件的路径
@@ -19,12 +20,19 @@ def compare_img(img1_path:str, img2_path:str) -> float:
         return 0
     img1 = cv2.imread(img1_path)
     img2 = cv2.imread(img2_path)
-    # 计算图片的直方图
-    hist1 = cv2.calcHist([img1], [0], None, [256], [0, 256])
-    hist2 = cv2.calcHist([img2], [0], None, [256], [0, 256])
-    # 计算直方图的相似度
-    similarity = cv2.compareHist(hist1, hist2, cv2.HISTCMP_CORREL)
-    return similarity
+
+    if img1.shape != img2.shape:
+        height, width = img1.shape[:2]
+        img2 = cv2.resize(img2, (width, height), interpolation=cv2.INTER_CUBIC)
+
+    # 将图像转换为灰度
+    gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
+    gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
+
+    # 计算SSIM,score越大相似度越高，diff越小
+    (score, diff) = structural_similarity(gray1, gray2, full=True)
+    print("图像SSIM: %.2f" % score)
+    return score
 
 def main(dir, img2_path):     # 绝对路径
     """比较文件夹下所有图片与模板图片的相似度
@@ -34,7 +42,7 @@ def main(dir, img2_path):     # 绝对路径
     file_path = get_file_path(dir)
     for i in file_path:
         similarity = compare_img(i, img2_path)
-        if similarity > 0.9:
+        if similarity > 0.7:
             print(f'路径为{i}的图片与模板图片的相似度为{similarity}')
             list_img.append(i)
     return list_img, similarity
