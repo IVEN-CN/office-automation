@@ -17,21 +17,27 @@ def get_file_path(file_dir) -> list:
 
 
 def color_detect(img_: np.ndarray,
-                 colorfile) -> bool:
+                 colorfile,
+                 ereafile='area.npy') -> bool:
     range_ = np.load(colorfile)
+    area = np.load(ereafile)
     lower = range_[0]
     upper = range_[1]
     hsv = cv2.cvtColor(img_, cv2.COLOR_BGR2HSV)
 
     mask = cv2.inRange(hsv, lower, upper)
-    if np.isin(roll, mask).any():
-        cv2.imshow('test', mask)
-        cv2.waitKey(0)
-        return True
-    else:
-        cv2.imshow('test', mask)
-        cv2.waitKey(0)
-        return False
+    # contours是轮廓集，hierarchy是轮廓属性
+    contours, hierarchy = cv2.findContours(mask,                    # 二值图像
+                                            cv2.RETR_TREE,           # 轮廓检索模式
+                                            cv2.CHAIN_APPROX_SIMPLE) # 轮廓近似方法
+    
+    for contour in contours:
+        # 对每个轮廓进行矩形拟合
+        x, y, w, h = cv2.boundingRect(contour)
+        brcnt = np.array([[[x, y]], [[x + w, y]], [[x + w, y + h]], [[x, y + h]]])
+        if w * h >= area:
+            return True
+    return False
 
 
 def mkdir():
@@ -49,7 +55,7 @@ def mvfile(path: list, target):
     for i in path:
         os.system(f'move {i} {target}')
 
-def mian():
+def main():
     file_path = get_file_path('./U007')
     for i in file_path:
         if '主图' in i or '细节' in i:
@@ -80,5 +86,4 @@ def mian():
             print('未知颜色')
 
 if __name__ == '__main__':
-    img = cv2.imread('750(9).jpg')
-    print(color_detect(img, '粉红.npy'))
+    main()
