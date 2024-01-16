@@ -55,8 +55,8 @@ def mvfile(path: list, target):
     for i in path:
         os.system(f'move {i} {target}')
 
-def main():
-    file_path = get_file_path('./U007')
+def main(path):
+    file_path = get_file_path(path)
     for i in file_path:
         if '主图' in i or '细节' in i:
             file_path.remove(i)
@@ -86,4 +86,4 @@ def main():
             print('未知颜色')
 
 if __name__ == '__main__':
-    main()
+    main('./U007')
