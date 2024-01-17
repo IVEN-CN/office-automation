@@ -41,14 +41,15 @@ def color_detect(img_: np.ndarray,
     return False
 
 
-def mkdir():
+def mkdir(path):
     """创建文件夹"""
     color = ['白色', '黑色', '浅紫', '杏色', '浅蓝', '浅绿', '粉红']
     for i in color:
         try:
-            os.mkdir(i)
+            os.mkdir(os.path.join(path, i))
         except FileExistsError:
             pass
+
 
 def delete_empty_folders(folder_path):
     """删除空文件夹"""
@@ -57,6 +58,7 @@ def delete_empty_folders(folder_path):
             dir_path = os.path.join(root, dir)
             if not os.listdir(dir_path):
                 os.rmdir(dir_path)
+
 
 def mvfile(path: list, target):
     """移动文件"""
@@ -70,7 +72,7 @@ def main(path):
         if '主图' in i or '细节' in i or '详情页' in i:
             file_path.remove(i)
 
-    mkdir()
+    mkdir(path)
 
 
     for i in file_path:
@@ -78,26 +80,25 @@ def main(path):
         if img is None:
             continue
         if color_detect(img, '浅紫.npy'):
-            mvfile([i], '浅紫')
+            mvfile([i], os.path.join(path, '浅紫'))
         elif color_detect(img, '杏色.npy'):
-            mvfile([i], '杏色')
+            mvfile([i], os.path.join(path, '杏色'))
         elif color_detect(img, '浅蓝.npy'):
-            mvfile([i], '浅蓝')
+            mvfile([i], os.path.join(path, '浅蓝'))
         elif color_detect(img, '浅绿.npy'):
-            mvfile([i], '浅绿')
+            mvfile([i], os.path.join(path, '浅绿'))
         elif color_detect(img, '粉红.npy'):
-            mvfile([i], '粉红')
+            mvfile([i], os.path.join(path, '粉红'))
         elif color_detect(img, '黑色.npy'):
-            mvfile([i], '黑色')
+            mvfile([i], os.path.join(path, '黑色'))
         elif color_detect(img, '白色.npy'):
-            mvfile([i], '白色')
+            mvfile([i], os.path.join(path, '白色'))
         else:
             print(i)
             print('未知颜色')
     delete_empty_folders(path)
 
 
-
-
 if __name__ == '__main__':
-    main('./A518')
+    # main('D:\\DIV\\KC41-XOU086')
+    print(color_detect(cv2.imread('800(7).jpg'), '黑色.npy'))
