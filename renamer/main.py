@@ -47,7 +47,7 @@ def divide_dir(root:list):
             lst800.append(i)
         elif "800X1200" in i:
             lst1200.append(i)
-        elif "700X1000" in i:
+        elif "750X1000" in i:
             lst1000.append(i)
 
 def main(path:str):
