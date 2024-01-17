@@ -2,6 +2,7 @@
 import os
 import cv2
 import numpy as np
+import os
 
 roll = np.ones([500, 500])
 
@@ -49,19 +50,28 @@ def mkdir():
         except FileExistsError:
             pass
 
+def delete_empty_folders(folder_path):
+    """删除空文件夹"""
+    for root, dirs, files in os.walk(folder_path, topdown=False):
+        for dir in dirs:
+            dir_path = os.path.join(root, dir)
+            if not os.listdir(dir_path):
+                os.rmdir(dir_path)
 
 def mvfile(path: list, target):
     """移动文件"""
     for i in path:
         os.system(f'move {i} {target}')
 
+
 def main(path):
     file_path = get_file_path(path)
     for i in file_path:
-        if '主图' in i or '细节' in i:
+        if '主图' in i or '细节' in i or '详情页' in i:
             file_path.remove(i)
 
     mkdir()
+
 
     for i in file_path:
         img = cv2.imread(i)
@@ -84,6 +94,10 @@ def main(path):
         else:
             print(i)
             print('未知颜色')
+    delete_empty_folders(path)
+
+
+
 
 if __name__ == '__main__':
-    main('./U007')
+    main('./A518')
