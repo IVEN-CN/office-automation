@@ -4,7 +4,8 @@ import cv2
 import numpy as np
 import os
 
-roll = np.ones([500, 500])
+
+# roll = np.ones([500, 500])
 
 
 def get_file_path(file_dir) -> list:
@@ -17,7 +18,7 @@ def get_file_path(file_dir) -> list:
     return path_list
 
 
-def color_detect(img_: np.ndarray,
+def color_detect(img_: np.ndarray,      # eara.npy是平铺识别面积，eara0.npy是模特识别面积
                  colorfile,
                  ereafile='area.npy') -> bool:
     range_ = np.load(colorfile)
@@ -28,10 +29,10 @@ def color_detect(img_: np.ndarray,
 
     mask = cv2.inRange(hsv, lower, upper)
     # contours是轮廓集，hierarchy是轮廓属性
-    contours, hierarchy = cv2.findContours(mask,                    # 二值图像
-                                            cv2.RETR_TREE,           # 轮廓检索模式
-                                            cv2.CHAIN_APPROX_SIMPLE) # 轮廓近似方法
-    
+    contours, hierarchy = cv2.findContours(mask,  # 二值图像
+                                           cv2.RETR_TREE,  # 轮廓检索模式
+                                           cv2.CHAIN_APPROX_SIMPLE)  # 轮廓近似方法
+
     for contour in contours:
         # 对每个轮廓进行矩形拟合
         x, y, w, h = cv2.boundingRect(contour)
@@ -66,7 +67,7 @@ def mvfile(path: list, target):
         os.system(f'move {i} {target}')
 
 
-def main(path):
+def main(path, erea):
     file_path = get_file_path(path)
     for i in file_path:
         if '主图' in i or '细节' in i or '详情页' in i:
@@ -74,24 +75,23 @@ def main(path):
 
     mkdir(path)
 
-
     for i in file_path:
         img = cv2.imread(i)
         if img is None:
             continue
-        if color_detect(img, '浅紫.npy'):
+        if color_detect(img, '浅紫.npy', ereafile=erea):
             mvfile([i], os.path.join(path, '浅紫'))
-        elif color_detect(img, '杏色.npy'):
+        elif color_detect(img, '杏色.npy', ereafile=erea):
             mvfile([i], os.path.join(path, '杏色'))
-        elif color_detect(img, '浅蓝.npy'):
+        elif color_detect(img, '浅蓝.npy', ereafile=erea):
             mvfile([i], os.path.join(path, '浅蓝'))
-        elif color_detect(img, '浅绿.npy'):
+        elif color_detect(img, '浅绿.npy', ereafile=erea):
             mvfile([i], os.path.join(path, '浅绿'))
-        elif color_detect(img, '粉红.npy'):
+        elif color_detect(img, '粉红.npy', ereafile=erea):
             mvfile([i], os.path.join(path, '粉红'))
-        elif color_detect(img, '黑色.npy'):
+        elif color_detect(img, '黑色.npy', ereafile=erea):
             mvfile([i], os.path.join(path, '黑色'))
-        elif color_detect(img, '白色.npy'):
+        elif color_detect(img, '白色.npy', ereafile=erea):
             mvfile([i], os.path.join(path, '白色'))
         else:
             print(i)
@@ -100,5 +100,5 @@ def main(path):
 
 
 if __name__ == '__main__':
-    # main('D:\\DIV\\KC41-XOU086')
-    print(color_detect(cv2.imread('800(7).jpg'), '黑色.npy'))
+    main('D:\\41tm\\KC-41-XOU173', 'area.npy')  # eara.npy是平铺识别面积，eara0.npy是模特识别面积
+    # print(color_detect(cv2.imread('D:\\DIV\\KC-41-XOU145\\750X1000\\1000(7).jpg'), '粉红.npy', 'area.npy'))
