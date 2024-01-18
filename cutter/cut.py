@@ -3,13 +3,15 @@ import os
 import cv2
 import re
 
-def cut(path1200:str, path1000:str='./', path800:str='./'):
+def cut_img(path1200:str, path1000:str='./', path800:str='./'):
     """将提供的800*1200尺寸的图片居中裁剪成800*800和750*1000
     path1200: 800*1200图片的路径
     path1000: 750*1000图片的路径
     path800: 800*800图片的路径"""
     img = cv2.imread(path1200)
-    h, w, _ = img.shape
+    if img.shape != (1200, 800, 3):
+        raise ValueError('图片尺寸不正确')
+
     img1 = img[200:1000, :]             # 800*800   
     img2 = img[100:1100, 25:25+750]     # 750*1000
     num = re.search(r'\((\d+)\)', path1200).group(1)  # 取括号内的数字
@@ -25,4 +27,4 @@ def cut(path1200:str, path1000:str='./', path800:str='./'):
 
 
 if __name__ == '__main__':
-    cut('./1200(1).jpg')
+    cut_img('./1200(2).jpg')
