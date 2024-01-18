@@ -3,7 +3,7 @@ import os
 import cv2
 import numpy as np
 import os
-
+import re
 
 # roll = np.ones([500, 500])
 
@@ -67,13 +67,18 @@ def mvfile(path: list, target):
         os.system(f'move {i} {target}')
 
 
-def main(path, erea):
+def main(*num, path, erea):
+    for i in num:       # 检查参数是否正确
+        if '(' not in i or ')' not in i:
+            raise ValueError('参数错误,main参数应该是类似(1)的形式')
+        
     file_path = get_file_path(path)
     for i in file_path:
-        if '主图' in i or '细节' in i or '详情页' in i:
+        num_ = f'({re.search(r'\((\d+)\)', i).group(1)})'       # num_ = '(1)'  (类似)
+        if '主图' in i or '细节' in i or '详情页' in i or num in num_:
             file_path.remove(i)
-
-    mkdir(path)
+        
+    mkdir(path)     # 创建颜色文件夹
 
     for i in file_path:
         img = cv2.imread(i)
@@ -100,5 +105,5 @@ def main(path, erea):
 
 
 if __name__ == '__main__':
-    main('D:\\41tm\\KC-41-XOU173', 'area.npy')  # eara.npy是平铺识别面积，eara0.npy是模特识别面积
+    main(path='D:\\41tm\\KC-41-XOU173', erea='area.npy')  # eara.npy是平铺识别面积，eara0.npy是模特识别面积
     # print(color_detect(cv2.imread('D:\\DIV\\KC-41-XOU145\\750X1000\\1000(7).jpg'), '粉红.npy', 'area.npy'))
