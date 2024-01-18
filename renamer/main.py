@@ -2,6 +2,7 @@
    将1200X800文件夹下的所有文件改成1200开头，后面接括号，括号的数字从6开始，例如1200(6)
    将800X800文件夹下的所有文件改成800开头，后面接括号，括号的数字从6开始，例如800(6)"""
 import os
+import re
 
 def get_file_path(file_dir) -> list:
     """获取相对路径下文件夹的所有文件的路径
@@ -22,7 +23,7 @@ def rename_file(file_path:str, num:int=1):
     """如果文件在700X1000文件夹下，那么该文件夹下的所有文件都改为1000开头，后面接括号，括号的数字从6开始，例如1000(6)
     如果文件在1200X800文件夹下，那么该文件夹下的所有文件都改成1200开头，后面接括号，括号的数字从6开始，例如1200(6)"""
     num = str(num)
-    if "700X1000" in file_path:
+    if "750X1000" in file_path:
         _rename_file(file_path,
                     f"1000({num}).jpg")
     elif "800X1200" in file_path:
@@ -49,6 +50,9 @@ def divide_dir(root:list):
             lst1200.append(i)
         elif "750X1000" in i:
             lst1000.append(i)
+    lst800 = sorted(lst800, key=lambda x: int(re.search(r'\((\d+)\)', x).group(1)))
+    lst1200 = sorted(lst1200, key=lambda x: int(re.search(r'\((\d+)\)', x).group(1)))
+    lst1000 = sorted(lst1000, key=lambda x: int(re.search(r'\((\d+)\)', x).group(1)))
 
 def main(path:str):
     file_dir = get_file_path(path)
@@ -61,4 +65,4 @@ def main(path:str):
         rename_file(lst1000[i], i+6)
         
 if __name__ == "__main__":
-    main('./U007')
+    main('D:\\DIV\\KC-41-XOU173')
