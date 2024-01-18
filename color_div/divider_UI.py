@@ -1,5 +1,5 @@
 from tkinter import *
-from main import main
+from color_div.color_divider import main
 
 def main_UI():
     def callback(): 
