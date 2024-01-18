@@ -5,6 +5,13 @@ import shutil
 import os
 import color_div.color_divider
 
+def done(func):
+    def wrapper(*args, **kwargs):
+        func(*args, **kwargs)
+        print('done')
+    return wrapper
+
+@done
 def main(path):
     list_path = renamer.main1.get_file_path(path)
     img1200_path = []
