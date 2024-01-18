@@ -2,6 +2,7 @@ import cv2
 import os
 from skimage.metrics import structural_similarity
 
+
 def get_file_path(file_dir) -> list:
     """获取相对路径下文件夹的所有文件的路径
     file_dir: 文件夹路径"""
@@ -10,6 +11,7 @@ def get_file_path(file_dir) -> list:
         for file in files:
             file_path.append(os.path.join(root, file))
     return file_path
+
 
 def compare_img(img1_path:str, img2_path:str) -> float:
     """比较两张图片的相似度
@@ -31,8 +33,9 @@ def compare_img(img1_path:str, img2_path:str) -> float:
 
     # 计算SSIM,score越大相似度越高，diff越小
     (score, diff) = structural_similarity(gray1, gray2, full=True)
-    print("图像SSIM: %.2f" % score)
+    print(f"图像SSIM:{score}")
     return score
+
 
 def main(dir, img2_path):     # 绝对路径
     """比较文件夹下所有图片与模板图片的相似度
@@ -46,6 +49,7 @@ def main(dir, img2_path):     # 绝对路径
             print(f'路径为{i}的图片与模板图片的相似度为{similarity}')
             list_img.append(i)
     return list_img, similarity
+
 
 if __name__ == "__main__":
     main('D:\\code_python\\pic_reserch\\match', 'D:\\code_python\\pic_reserch\\match\\1.png')
