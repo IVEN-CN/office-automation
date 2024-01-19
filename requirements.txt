@@ -4,4 +4,7 @@
 
 numpy>=1.18.5
 opencv-python>=4.1.1
+
+# Optional ------------------------------------
 scikit-image
+smbprotocol
