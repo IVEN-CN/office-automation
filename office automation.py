@@ -60,7 +60,7 @@ def main(*num, path):       # num是不需要移动到主图文件夹的图片�
 
     # 颜色分类
     color_div.color_divider.main(path=path, erea='area0.npy')
-    color_div.color_divider.main(path=path, erea='area.npy')
+    color_div.color_divider.main(path=path, erea='area1.npy')
 
 if __name__ == '__main__':
-    main(path='D:\\41short\\KC-41-XOU174')
+    main(path=r'D:\41short\KC-41-XOU179')
