@@ -1,7 +1,10 @@
 """主图文件夹里面同样要重命名，800(6)改成800(1),类似的，1000(6)改成1000(1),1200(6)改成1200(1)"""
-import renamer.main1 as main1
 import os
 import re
+try:
+    import main1
+except:
+    import renamer.main1 as main1
 
 def rename2(path):
     dir = path
@@ -39,4 +42,4 @@ def rename2(path):
             os.rename(k, new_name)
 
 if __name__ == '__main__':
-    rename2('./主图')
+    rename2('D:\\41tm\\KC-41-XOU131\\main')
