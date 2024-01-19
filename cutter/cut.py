@@ -53,9 +53,4 @@ def cut_cut(*filename, path):
         cut_img(path,i)
 
 if __name__ == '__main__':
-    # cut_img('D:\\41short\\KC-41-XOU132\\主图\\1200(5).jpg', 'D:\\41short\\KC-41-XOU132\\主图', 'D:\\41short\\KC-41-XOU132\\主图')
-    # cut_img('D:\\41short\\KC-41-XOU132\\主图\\1200(4).jpg', 'D:\\41short\\KC-41-XOU132\\主图', 'D:\\41short\\KC-41-XOU132\\主图')
-    # cut_img('./1200(7).jpg')
-    # cut_img('D:\\41short\\KC-41-XOU132\\主图','1200(5).jpg')
-    # cut_img('D:\\41short\\KC-41-XOU132\\主图','1200(4).jpg')
-    cut_cut('1200(5).jpg','1200(4).jpg',path=r'D:\41short\KC-41-XOU170\主图')
+    cut_cut('1200(1).jpg','1200(5).jpg',path=r'D:\41short\KC-41-XOU179\主图')
