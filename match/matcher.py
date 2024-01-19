@@ -43,6 +43,7 @@ def main(dir, img2_path):     # 绝对路径
     img2_path: 图片模板的路径"""
     list_img = []
     file_path = get_file_path(dir)
+    similarity = 0  # Initialize similarity variable
     for i in file_path:
         similarity = compare_img(i, img2_path)
         if similarity > 0.7:
