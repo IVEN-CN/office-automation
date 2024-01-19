@@ -55,8 +55,8 @@ def main(*num, path):       # num是不需要移动到主图文件夹的图片�
     renamer.main2.rename2(os.path.join(path, '主图'))
 
     # 颜色分类
-    color_div.color_divider.main(path, 'area0.npy')
-    color_div.color_divider.main(path, 'area.npy')
+    color_div.color_divider.main(path=path, erea='area0.npy')
+    color_div.color_divider.main(path=path, erea='area.npy')
 
 if __name__ == '__main__':
     main(path='D:\\41short\\KC-41-XOU174')
