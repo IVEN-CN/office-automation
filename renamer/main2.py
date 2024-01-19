@@ -14,7 +14,11 @@ def rename2(path):
     for i in path_list:
         # v = int(i[-6])       # 取括号内的数字
         k = i
-        num = re.search(r'\((\d+)\)', i).group(1)  # 取括号内的数字
+        match = re.search(r'\((\d+)\)', i)
+        if match is not None:
+            num = match.group(1)
+        else:
+            raise TypeError('没有匹配到括号内的数字')
         num_ = int(num)
         new_name = re.sub(r'\((\d+)\)', lambda match: f'({int(match.group(1))-5})', i)
 
@@ -30,7 +34,11 @@ def rename2(path):
 
     for i in list_:
         k = i
-        num = re.search(r'\((\d+)\)', i).group(1)  # 取括号内的数字
+        match = re.search(r'\((\d+)\)', i)
+        if match is not None:
+            num = match.group(1)
+        else:
+            raise TypeError('没有匹配到括号内的数字')
         num_ = int(num)
         new_name = re.sub(r'\((\d+)\)', lambda match: f'({int(match.group(1))-5})', i)
 
