@@ -23,14 +23,14 @@ def save_color(x) -> None:
 
 def save_area(x) -> None:
     """保存面积的函数"""
-    global arr
+    global arr, choose_area
     if x == 1:
-        np.save('area.npy', arr)
+        np.save(f'area{choose_area}.npy', arr)
     else:
         pass
 
 def main(path):
-    global low_color, up_color, color, arr
+    global low_color, up_color, color, arr, choose_area
     # 创建窗口
     cv2.namedWindow('test',cv2.WINDOW_NORMAL)
     cv2.namedWindow('test1', cv2.WINDOW_NORMAL)
@@ -53,7 +53,7 @@ def main(path):
     cv2.createTrackbar('upper_V', 'test', H_V, 255, callback)
     # 创建颜色选项
     cv2.createTrackbar('color', 'test', 0, 7, callback)
-
+    cv2.createTrackbar('chooes_area', 'test', 0, 1, callback)
     cv2.createTrackbar('area', 'test', 1200*800, 1200*800, callback)
     # 保存文件的trackbar
     cv2.createTrackbar('save_color', 'test', 0, 1, save_color)
@@ -75,6 +75,7 @@ def main(path):
         H_V = cv2.getTrackbarPos('upper_V', 'test')
         _color = cv2.getTrackbarPos('color', 'test')
         area = cv2.getTrackbarPos('area', 'test')
+        choose_area = cv2.getTrackbarPos('chooes_area', 'test')
         # endregion
 
         dist = {0:'白色',
