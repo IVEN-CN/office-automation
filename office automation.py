@@ -4,6 +4,7 @@ import renamer.main2
 import shutil
 import os
 import color_div.color_divider
+import re
 
 def done(func):
     def wrapper(*args, **kwargs):
@@ -12,7 +13,7 @@ def done(func):
     return wrapper
 
 @done
-def main(path):
+def main(*num, path):       # num是不需要移动到主图文件夹的图片序号,类似于(1),(2),(3)
     list_path = renamer.main1.get_file_path(path)
     img1200_path = []
     img_path = []
@@ -22,14 +23,21 @@ def main(path):
             img1200_path.append(i)
     
     for i in img1200_path:      # 裁剪
-        cut(i, path, path)
+        k = os.path.dirname(i)
+        filename = os.path.basename(i)  # Extract the file name
+        cut(k, filename, elflag=False)
 
     # 更新list_path
     list_path = renamer.main1.get_file_path(path)
 
-    for i in list_path:         # 获取需要分类的图片路径
-        if '800' in i or '1000' in i or '1200' in i:
-            img_path.append(i)
+    for i in list_path:         # 获取需拷贝到主图的图片路径
+        try:
+            # 获取括号内数字
+            num_ = f'({re.search(r'\((\d+)\)', i).group(1)})'
+            if '800' in i or '1000' in i or '1200' in i or num_ not in num:
+                img_path.append(i)
+        except:
+            pass
 
     # region 将需要分类的图片线拷贝到主图文件夹
     # 尝试创建主图文件夹
@@ -51,4 +59,4 @@ def main(path):
     color_div.color_divider.main(path, 'area.npy')
 
 if __name__ == '__main__':
-    main('./')
+    main(path='D:\\41short\\KC-41-XOU174')
