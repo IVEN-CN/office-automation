@@ -16,7 +16,11 @@ def cut_img_(path1200:str, path1000:str='./', path800:str='./', elflag:bool=True
 
     img1 = img[200:1000, :]             # 800*800   
     img2 = img[100:1100, 25:25+750]     # 750*1000
-    num = re.search(r'\((\d+)\)', path1200).group(1)  # 取括号内的数字
+    match = re.search(r'\((\d+)\)', path1200)
+    if match is not None:
+        num = match.group(1)
+    else:
+        raise TypeError('没有匹配到括号内的数字')
 
     name800 = '800(' + num + ').jpg'
     name1000 = '1000(' + num + ').jpg'

@@ -1,4 +1,5 @@
 """将不同颜色的色卡图片分到新的文件夹，文件夹用颜色命名"""
+from math import e
 import os
 import cv2
 import numpy as np
@@ -76,7 +77,11 @@ def main(*num, path, erea):
     file_path = get_file_path(path)
     for i in file_path:
         try:
-            num_ = f'({re.search(r'\((\d+)\)', i).group(1)})'       # num_ = '(1)'  (类似)
+            match = re.search(r'\((\d+)\)', i)
+            if match is not None:
+                num_ = match.group(1)
+            else:
+                raise TypeError('没有匹配到括号内的数字')
             if '主图' in i or '细节' in i or '详情页' in i or num in num_:
                 file_path.remove(i)
         except:

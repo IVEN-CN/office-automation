@@ -33,7 +33,11 @@ def main(*num, path):       # num是不需要移动到主图文件夹的图片�
     for i in list_path:         # 获取需拷贝到主图的图片路径
         try:
             # 获取括号内数字
-            num_ = f'({re.search(r'\((\d+)\)', i).group(1)})'
+            match = re.search(r'\((\d+)\)', i)
+            if match is not None:
+                num_ = match.group(1)
+            else:
+                raise TypeError('没有匹配到括号内的数字')
             if '800' in i or '1000' in i or '1200' in i or num_ not in num:
                 img_path.append(i)
         except:
