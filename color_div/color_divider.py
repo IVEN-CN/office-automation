@@ -44,7 +44,7 @@ def color_detect(img_: np.ndarray,      # eara.npy是平铺识别面积，eara0.
 
 def mkdir(path):
     """创建文件夹"""
-    color = ['白色', '黑色', '浅紫', '杏色', '浅蓝', '浅绿', '粉红']
+    color = ['白色', '黑色', '浅紫', '杏色', '浅蓝', '浅绿', '粉红', '浅黄']
     for i in color:
         try:
             os.mkdir(os.path.join(path, i))
@@ -68,15 +68,19 @@ def mvfile(path: list, target):
 
 
 def main(*num, path, erea):
+    
     for i in num:       # 检查参数是否正确
         if '(' not in i or ')' not in i:
             raise ValueError('参数错误,main参数应该是类似(1)的形式')
         
     file_path = get_file_path(path)
     for i in file_path:
-        num_ = f'({re.search(r'\((\d+)\)', i).group(1)})'       # num_ = '(1)'  (类似)
-        if '主图' in i or '细节' in i or '详情页' in i or num in num_:
-            file_path.remove(i)
+        try:
+            num_ = f'({re.search(r'\((\d+)\)', i).group(1)})'       # num_ = '(1)'  (类似)
+            if '主图' in i or '细节' in i or '详情页' in i or num in num_:
+                file_path.remove(i)
+        except:
+            pass
         
     mkdir(path)     # 创建颜色文件夹
 
@@ -84,20 +88,22 @@ def main(*num, path, erea):
         img = cv2.imread(i)
         if img is None:
             continue
-        if color_detect(img, '浅紫.npy', ereafile=erea):
-            mvfile([i], os.path.join(path, '浅紫'))
-        elif color_detect(img, '杏色.npy', ereafile=erea):
+        if color_detect(img, '杏色.npy', ereafile=erea):
             mvfile([i], os.path.join(path, '杏色'))
         elif color_detect(img, '浅蓝.npy', ereafile=erea):
             mvfile([i], os.path.join(path, '浅蓝'))
         elif color_detect(img, '浅绿.npy', ereafile=erea):
             mvfile([i], os.path.join(path, '浅绿'))
+        elif color_detect(img, '浅黄.npy', ereafile=erea):
+            mvfile([i], os.path.join(path, '浅黄'))
         elif color_detect(img, '粉红.npy', ereafile=erea):
             mvfile([i], os.path.join(path, '粉红'))
         elif color_detect(img, '黑色.npy', ereafile=erea):
             mvfile([i], os.path.join(path, '黑色'))
         elif color_detect(img, '白色.npy', ereafile=erea):
             mvfile([i], os.path.join(path, '白色'))
+        elif color_detect(img, '浅紫.npy', ereafile=erea):
+            mvfile([i], os.path.join(path, '浅紫'))
         else:
             print(i)
             print('未知颜色')
