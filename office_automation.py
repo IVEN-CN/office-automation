@@ -5,6 +5,7 @@ import shutil
 import os
 import color_div.color_divider
 import re
+import os
 
 def done(func):
     def wrapper(*args, **kwargs):
@@ -13,7 +14,7 @@ def done(func):
     return wrapper
 
 @done
-def main(*num, path):       # num是不需要移动到主图文件夹的图片序号,类似于(1),(2),(3)
+def main(*num, path, ifcolordiv=True):       # num是不需要移动到主图文件夹的图片序号,类似于(1),(2),(3)
     list_path = renamer.main1.get_file_path(path)
     img1200_path = []
     img_path = []
@@ -58,9 +59,33 @@ def main(*num, path):       # num是不需要移动到主图文件夹的图片�
     # 重命名主图文件夹的文件
     renamer.main2.rename2(os.path.join(path, '主图'))
 
-    # 颜色分类
-    color_div.color_divider.main(path=path, erea='area0.npy')
-    color_div.color_divider.main(path=path, erea='area1.npy')
+    if ifcolordiv:
+        # 颜色分类
+        color_div.color_divider.main(path=path, erea='area0.npy')
+        color_div.color_divider.main(path=path, erea='area1.npy')
+    else:
+        list_path = renamer.main1.get_file_path(path)       # 更新list_path
+        for i in list_path:
+            if '主图' in i or 'main' in i:
+                os.remove(i)
+            
+        folder_names = ['800X1200', '800X800', '750X1000']
+        for folder_name in folder_names:
+            folder_path = os.path.join(path, folder_name)
+            os.makedirs(folder_path, exist_ok=True)
+        for i in list_path:
+            if '800' in i:
+                shutil.move(i, os.path.join(path, '800X1200'))
+            elif '1000' in i:
+                shutil.move(i, os.path.join(path, '750X1000'))
+            elif '1200' in i:
+                shutil.move(i, os.path.join(path, '800X800'))
+            else:
+                pass
+
+    if __name__ == '__main__':
+        main(path=r'D:\41short\KC-41-XOU179')
+
 
 if __name__ == '__main__':
     main(path=r'D:\41short\KC-41-XOU179')
