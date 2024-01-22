@@ -45,7 +45,7 @@ def color_detect(img_: np.ndarray,      # eara.npy是平铺识别面积，eara0.
 
 def mkdir(path):
     """创建文件夹"""
-    color = ['白色', '黑色', '浅紫', '杏色', '浅蓝', '浅绿', '粉红', '浅黄']
+    color = ['白色', '黑色', '浅紫', '杏色', '浅蓝', '浅绿', '粉红', '浅黄', '红色']
     for i in color:
         try:
             os.mkdir(os.path.join(path, i))
@@ -109,6 +109,8 @@ def main(*num, path, erea):
             mvfile([i], os.path.join(path, '白色'))
         elif color_detect(img, '浅紫.npy', ereafile=erea):
             mvfile([i], os.path.join(path, '浅紫'))
+        elif color_detect(img, '红色.npy', ereafile=erea):
+            mvfile([i], os.path.join(path, '红色'))
         else:
             print(i)
             print('未知颜色')
