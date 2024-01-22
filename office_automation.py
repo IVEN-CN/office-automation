@@ -52,7 +52,7 @@ def main(*num, path, ifcolordiv=True):       # num是不需要移动到主图文
         pass
 
     # 将图片拷贝到主图文件夹
-    for i in img_path:
+    for i in img_path[::2]:
         shutil.copy(i, os.path.join(path, '主图'))
     # endregion
         
@@ -64,28 +64,21 @@ def main(*num, path, ifcolordiv=True):       # num是不需要移动到主图文
         color_div.color_divider.main(path=path, erea='area0.npy')
         color_div.color_divider.main(path=path, erea='area1.npy')
     else:
-        list_path = renamer.main1.get_file_path(path)       # 更新list_path
-        for i in list_path:
-            if '主图' in i or 'main' in i:
-                os.remove(i)
-            
+
         folder_names = ['800X1200', '800X800', '750X1000']
         for folder_name in folder_names:
             folder_path = os.path.join(path, folder_name)
-            os.makedirs(folder_path, exist_ok=True)
-        for i in list_path:
-            if '800' in i:
+            os.makedirs(folder_path)
+        for i in img_path:
+            if '800X1200' in i:
                 shutil.move(i, os.path.join(path, '800X1200'))
-            elif '1000' in i:
+            elif '750X1000' in i:
                 shutil.move(i, os.path.join(path, '750X1000'))
-            elif '1200' in i:
+            elif '800X800' in i:
                 shutil.move(i, os.path.join(path, '800X800'))
             else:
                 pass
 
-    if __name__ == '__main__':
-        main(path=r'D:\41short\KC-41-XOU179')
-
 
 if __name__ == '__main__':
-    main(path=r'D:\41short\KC-41-XOU179')
+    main(path=r'D:\41shortA2',ifcolordiv=False)

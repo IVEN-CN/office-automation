@@ -9,18 +9,33 @@ except:
 def rename2(path):
     dir = path
     path_list = main1.get_file_path(dir)
+
     list_ = []
 
+    list800 = []
+    list1000 = []
+    list1200 = []
+
     for i in path_list:
-        # v = int(i[-6])       # 取括号内的数字
+        if '800' in i:
+            list800.append(i)
+        elif '1000' in i:
+            list1000.append(i)
+        elif '1200' in i:
+            list1200.append(i)
+        
+        list800.sort(key=lambda x: int(re.search(r'\((\d+)\)', x).group(1)), reverse=False)
+        list1000.sort(key=lambda x: int(re.search(r'\((\d+)\)', x).group(1)), reverse=False)
+        list1200.sort(key=lambda x: int(re.search(r'\((\d+)\)', x).group(1)), reverse=False)
+    
+    for index, i in enumerate(list800[0:5]):
         k = i
         match = re.search(r'\((\d+)\)', i)
         if match is not None:
             num = match.group(1)
         else:
             raise TypeError('没有匹配到括号内的数字')
-        num_ = int(num)
-        new_name = re.sub(r'\((\d+)\)', lambda match: f'({int(match.group(1))-5})', i)
+        new_name = re.sub(r'\((\d+)\)', lambda match: f'({index+1})', i)
 
         try:
             if '800' in i:
@@ -30,9 +45,46 @@ def rename2(path):
             elif '1200' in i:
                 os.rename(k, new_name)
         except:
-            list_.append(i)
+            list_.append((index, i))
 
-    for i in list_:
+    for index, i in enumerate(list1000[0:5]):
+        k = i
+        match = re.search(r'\((\d+)\)', i)
+        if match is not None:
+            num = match.group(1)
+        else:
+            raise TypeError('没有匹配到括号内的数字')
+        new_name = re.sub(r'\((\d+)\)', lambda match: f'({index+1})', i)
+
+        try:
+            if '800' in i:
+                os.rename(k, new_name)
+            elif '1000' in i:
+                os.rename(k, new_name)
+            elif '1200' in i:
+                os.rename(k, new_name)
+        except:
+            list_.append((index, i))
+
+    for index, i in enumerate(list1200[0:5]):
+        k = i
+        match = re.search(r'\((\d+)\)', i)
+        if match is not None:
+            num = match.group(1)
+        else:
+            raise TypeError('没有匹配到括号内的数字')
+        new_name = re.sub(r'\((\d+)\)', lambda match: f'({index+1})', i)
+
+        try:
+            if '800' in i:
+                os.rename(k, new_name)
+            elif '1000' in i:
+                os.rename(k, new_name)
+            elif '1200' in i:
+                os.rename(k, new_name)
+        except:
+            list_.append((index, i))
+    for index, i in list_:
         k = i
         match = re.search(r'\((\d+)\)', i)
         if match is not None:
@@ -40,7 +92,7 @@ def rename2(path):
         else:
             raise TypeError('没有匹配到括号内的数字')
         num_ = int(num)
-        new_name = re.sub(r'\((\d+)\)', lambda match: f'({int(match.group(1))-5})', i)
+        new_name = re.sub(r'\((\d+)\)', lambda match: f'({index+1})', i)
 
         if '800' in i:
             os.rename(k, new_name)
