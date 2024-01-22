@@ -41,8 +41,12 @@ def main(*num, path, ifcolordiv=True):       # num是不需要移动到主图文
         pass
 
     # 将1200图片拷贝到主图文件夹
-    for i in random.choices(img1200_path, k=5):
-        shutil.copy(i, os.path.join(path, '主图'))
+    try:
+        for i in random.choices(img1200_path, k=5):
+            shutil.copy(i, os.path.join(path, '主图'))
+    except ValueError:
+        for i in img1200_path:
+            shutil.copy(i, os.path.join(path, '主图'))
     # endregion
         
     # region 裁剪主图文件夹图片
@@ -67,10 +71,10 @@ def main(*num, path, ifcolordiv=True):       # num是不需要移动到主图文
             os.remove(i)
     # endregion
 
-    if ifcolordiv:       # 颜色分类
+    if ifcolordiv:          # 颜色分类
         color_div.color_divider.main(path=path, erea='area0.npy')
         color_div.color_divider.main(path=path, erea='area1.npy')
-    else:               # 尺寸分类
+    else:                   # 尺寸分类
         folder_names = ['800X1200', '800X800', '750X1000']
         for folder_name in folder_names:
             folder_path = os.path.join(path, folder_name)
