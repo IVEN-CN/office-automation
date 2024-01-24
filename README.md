@@ -26,9 +26,9 @@
 ## 主文件使用方法
 首先提供所有颜色的1200尺寸的平铺图和普通无需裁剪的模特图，文件夹路径要求不能有中文（D:\41short\KC-41-XOU128\）
     
-    调整office automation.py文件结尾main函数的参数如果事先就决定那个序号的图片不需要移动到主图文件夹，例如现在(7)号图片不需要移动到主图文件夹，那么参数修改为
+    调整office automation.py文件结尾main函数的参数,如果图片不需要使用颜色分类，那么将第二个参数ifcolordiv改为False
 
-    main('(7)',path=r'D:\41short\KC-41-XOU128')
+    main(path=r'D:\41short\KC-41-XOU128', ifcolordiv=False)
 
     <!-- 需要注意的是，颜色分类并不一定准确，分类完成后必须检查！ -->
 
