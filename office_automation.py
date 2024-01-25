@@ -17,12 +17,22 @@ def done(func):             # 装饰器
     return wrapper
 
 @done
-def main(path, ifcolordiv=True):
+def main(path, ifcolordiv=True, ifmain=True):
     """path：工作路径
     ifcolordiv：是否需要颜色分类"""
     list_path = renamer.main1.get_file_path(path)
     img1200_path = []
     img_path = []
+
+    if ifmain == False:
+        list_path = [i for i in list_path if '主图' not in str(i) or 'main' not in str(i)]
+        main_path = [i for i in list_path if '主图' in str(i) or 'main' in str(i)]
+
+        for i in main_path:
+            k = os.path.dirname(i)
+            filename = os.path.basename(i)
+            if filename[-3:] in ['jpg', 'png']:
+                cut(k, filename, elflag=False)
 
     for i in list_path:         # 获取1200*800的图片路径
         if '1200' in i:
@@ -35,62 +45,67 @@ def main(path, ifcolordiv=True):
 
     # 更新list_path
     list_path = renamer.main1.get_file_path(path)
+    if ifmain == False:
+        list_path = [i for i in list_path if '主图' not in str(i) ]
+        list_path = [i for i in list_path if 'main' not in str(i) ]
+
 
     for i in list_path:         # 获取所有图片路径
         if '1200' in i or '1000' in i or '800' in i:
             img_path.append(i)
 
-    # region 将需要分类的图片拷贝到主图文件夹
-    # 尝试创建主图文件夹
-    try:
-        os.mkdir(os.path.join(path, '主图'))
-    except FileExistsError:
-        pass
+    if ifmain:                  # 主图分类
+        # region 将需要分类的图片拷贝到主图文件夹
+        # 尝试创建主图文件夹
+        try:
+            os.mkdir(os.path.join(path, '主图'))
+        except FileExistsError:
+            pass
 
-    # 将1200图片拷贝到主图文件夹
-    try:
-        list_random = random.sample(img1200_path, k=5)
-        for i in list_random:
-            shutil.copy(i, os.path.join(path, '主图'))
-            time.sleep(0.1)
-    except ValueError:
-        for i in img1200_path:
-            shutil.copy(i, os.path.join(path, '主图'))
-    # endregion
+        # 将1200图片拷贝到主图文件夹
+        try:
+            list_random = random.sample(img1200_path, k=5)
+            for i in list_random:
+                shutil.copy(i, os.path.join(path, '主图'))
+                time.sleep(0.1)
+        except ValueError:
+            for i in img1200_path:
+                shutil.copy(i, os.path.join(path, '主图'))
+        # endregion
+            
+        # region 裁剪主图文件夹图片
+        path_main = os.path.join(path, '主图')
+        main_image_files = renamer.main1.get_file_path(path_main)           # 获取主图文件夹的图片路径
+        for i in main_image_files:
+            k = os.path.dirname(i)
+            filename = os.path.basename(i)                                  # 确定文件名
+            cut(k, filename, elflag=True)                                   # 裁剪
         
-    # region 裁剪主图文件夹图片
-    path_main = os.path.join(path, '主图')
-    main_image_files = renamer.main1.get_file_path(path_main)           # 获取主图文件夹的图片路径
-    for i in main_image_files:
-        k = os.path.dirname(i)
-        filename = os.path.basename(i)                                  # 确定文件名
-        cut(k, filename, elflag=True)                                   # 裁剪
+        # endregion
         
-    # endregion
-        
-    # 重命名主图文件夹的文件
-    renamer.main2.rename2(os.path.join(path, '主图'))
+        # 重命名主图文件夹的文件
+        renamer.main2.rename2(os.path.join(path, '主图'))
 
-    # region 检查主图的多余文件
-    check_path = renamer.main1.get_file_path(os.path.join(path, '主图'))
-    list_ = ['1', '2', '3', '4', '5']
-    for i in check_path:
-        match = re.search(r'\((\d+)\)', i)
-        if match:
-            num__ = match.group(1)
-            if num__ not in list_:
-                os.remove(i)
-    # endregion
+        # region 检查主图的多余文件
+        check_path = renamer.main1.get_file_path(os.path.join(path, '主图'))
+        list_ = ['1', '2', '3', '4', '5']
+        for i in check_path:
+            match = re.search(r'\((\d+)\)', i)
+            if match:
+                num__ = match.group(1)
+                if num__ not in list_:
+                    os.remove(i)
+        # endregion
 
     if ifcolordiv:          # 颜色分类
         color_div.color_divider.main(path=path, erea='area0.npy')       # 分类模特
         color_div.color_divider.main(path=path, erea='area1.npy')       # 分类衣服
     else:                   # 尺寸分类
         folder_names = ['800X1200', '800X800', '750X1000']
-        for folder_name in folder_names:
+        for folder_name in folder_names:        # 尝试创建文件夹
             folder_path = os.path.join(path, folder_name)
             os.makedirs(folder_path)
-        for i in img_path:
+        for i in img_path:                      # 将图片分类,并移动到对应文件夹
             if '1200' in i:
                 shutil.move(i, os.path.join(path, '800X1200'))
             elif '1000' in i:
@@ -102,4 +117,5 @@ def main(path, ifcolordiv=True):
 
 
 if __name__ == '__main__':
-    main(path=r'D:\41_1-17\AM51',ifcolordiv=True)
+    main(path=r'D:\41normalMaleT4-A12-15\U001',ifcolordiv=True,ifmain=True)
+    
