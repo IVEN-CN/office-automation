@@ -7,6 +7,11 @@ def paste(a:np.ndarray, b:np.ndarray, position:tuple):
     """将a数组贴在b数组上，position为贴图的左上角坐标"""
     shape = a.shape
 
+    for i in range(shape[0]):
+        for k in range(shape[1]):
+            b[position[0]+i][position[1]+k] = a[i][k]
+    return b
+
 def paste_png_to_jpg(png_path, jpg_path, x, y):
 
     # 调整png图片的大小
@@ -21,6 +26,9 @@ def paste_png_to_jpg(png_path, jpg_path, x, y):
 
     # 获取png图片的rgb通道
     rgb = png[:, :, :3]
+
+    # 分离RGB
+    B, G, R = cv2.split(rgb)
 
     cv2.imshow('jpg', jpg)
     cv2.waitKey(0)
