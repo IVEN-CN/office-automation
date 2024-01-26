@@ -8,13 +8,14 @@ def cut_img_(path1200:str, path1000:str='./', path800:str='./', elflag:bool=True
     path1200: 800*1200图片的路径
     path1000: 750*1000图片的路径
     path800: 800*800图片的路径
-    elflge: 是否对主图文件夹进行操作"""
+    elflge: 是否是对主图文件夹进行操作"""
 
     img = cv2.imread(path1200)
     if img.shape != (1200, 800, 3):
         raise ValueError('图片尺寸不正确')
 
-    img1 = img[200:1000, :]             # 800*800   
+    # img1 = img[200+15:1000+15, :]       # 800*800   
+    img1 = img[200:1000, :]       # 800*800
     img2 = img[100:1100, 25:25+750]     # 750*1000
     match = re.search(r'\((\d+)\)', path1200)
     if match is not None:
@@ -36,6 +37,9 @@ def cut_img_(path1200:str, path1000:str='./', path800:str='./', elflag:bool=True
         os.rename(newpath, newname)
 
 def cut_img(path,filename, elflag=True):
+    """path: 图片所在文件夹的路径
+       filename: 图片的文件名
+       elflag: 是否是对主图文件夹进行操作"""
     global flag, newpath
     flag = 0
     if '主图' in path:
@@ -49,8 +53,10 @@ def cut_img(path,filename, elflag=True):
         cut_img_(_path, path, path,elflag=elflag)
 
 def cut_cut(*filename, path):
+    """filename: 图片的文件名
+       path: 主图文件夹的路径"""
     for i in filename:
         cut_img(path,i)
 
 if __name__ == '__main__':
-    cut_cut('1200(1).jpg','1200(5).jpg',path=r'D:\41short\KC-41-XOU179\主图')
+    cut_cut('1200(1).jpg','1200(2).jpg','1200(5).jpg','1200(3).jpg','1200(4).jpg', path=r'D:\OA\U064\主图')
