@@ -31,8 +31,8 @@ def main(path, ifcolordiv=True, ifmain=True, ifstack=False, stack_path=None):
         raise ValueError('stack_path is None')
 
     if ifmain == False:
-        list_path = [i for i in list_path if '主图' not in str(i) or 'main' not in str(i)]      # 非主图文件的路径
         main_path = [i for i in list_path if '主图' in str(i) or 'main' in str(i)]              # 主图文件的路径
+        list_path = [i for i in list_path if '主图' not in str(i) and 'main' not in str(i)]      # 非主图文件的路径
 
         for i in main_path:
             k = os.path.dirname(i)
@@ -128,5 +128,5 @@ def main(path, ifcolordiv=True, ifmain=True, ifstack=False, stack_path=None):
 
 
 if __name__ == '__main__':
-    main(path=r'D:\OA\U064',ifcolordiv=True,ifmain=False)
+    main(path=r'D:\OA\U096',ifcolordiv=True,ifmain=False)
     
