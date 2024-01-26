@@ -106,7 +106,9 @@ def main(*num, path, erea):
         img = cv2.imread(i)
         if img is None:
             continue
-        if color_detect(img, '杏色.npy', ereafile=erea):
+        if color_detect(img, '卡其.npy', ereafile=erea):
+            mvfile([i], os.path.join(path, '卡其'))
+        elif color_detect(img, '杏色.npy', ereafile=erea):
             mvfile([i], os.path.join(path, '杏色'))
         elif color_detect(img, '浅蓝.npy', ereafile=erea):
             mvfile([i], os.path.join(path, '浅蓝'))
@@ -114,6 +116,8 @@ def main(*num, path, erea):
             mvfile([i], os.path.join(path, '浅绿'))
         elif color_detect(img, '浅黄.npy', ereafile=erea):
             mvfile([i], os.path.join(path, '浅黄'))
+        elif color_detect(img, '虾玉色.npy', ereafile=erea):
+            mvfile([i], os.path.join(path, '虾玉色'))
         elif color_detect(img, '粉红.npy', ereafile=erea):
             mvfile([i], os.path.join(path, '粉红'))
         elif color_detect(img, '黑色.npy', ereafile=erea):
@@ -128,10 +132,6 @@ def main(*num, path, erea):
             mvfile([i], os.path.join(path, '黄色'))
         elif color_detect(img, '深灰.npy', ereafile=erea):
             mvfile([i], os.path.join(path, '深灰'))
-        elif color_detect(img, '卡其.npy', ereafile=erea):
-            mvfile([i], os.path.join(path, '卡其'))
-        elif color_detect(img, '虾玉色.npy', ereafile=erea):
-            mvfile([i], os.path.join(path, '虾玉色'))
         elif color_detect(img, '雾霾蓝.npy', ereafile=erea):
             mvfile([i], os.path.join(path, '雾霾蓝'))
         else:
