@@ -17,12 +17,17 @@ def done(func):             # 装饰器
     return wrapper
 
 @done
-def main(path, ifcolordiv=True, ifmain=True):
+def main(path, ifcolordiv=True, ifmain=True, ifstack=False, stack_path=None):
     """path：工作路径
-    ifcolordiv：是否需要颜色分类"""
+    ifcolordiv：是否需要颜色分类
+    ifmain:是否对主图操作，即若提供了主图并且主图文件夹已经存在(不对主图操作)则为False，否则为True
+    ifstack:是否需要贴图，对于套装图片，需要贴图，对于单件图片，不需要贴图"""
     list_path = renamer.main1.get_file_path(path)
     img1200_path = []
     img_path = []
+
+    if ifstack and stack_path is None:          # 检查参数
+        raise ValueError('stack_path is None')
 
     if ifmain == False:
         list_path = [i for i in list_path if '主图' not in str(i) or 'main' not in str(i)]
@@ -117,5 +122,5 @@ def main(path, ifcolordiv=True, ifmain=True):
 
 
 if __name__ == '__main__':
-    main(path=r'D:\41normalMaleT4-A12-15\U001',ifcolordiv=True,ifmain=True)
+    main(path=r'D:\41normalMaleT4-B12-15\U009',ifcolordiv=True,ifmain=True)
     
