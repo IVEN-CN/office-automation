@@ -8,6 +8,7 @@ import re
 import os
 import random
 import time
+import stack.stacker
 
 def done(func):             # 装饰器
     def wrapper(*args, **kwargs):
@@ -30,18 +31,23 @@ def main(path, ifcolordiv=True, ifmain=True, ifstack=False, stack_path=None):
         raise ValueError('stack_path is None')
 
     if ifmain == False:
-        list_path = [i for i in list_path if '主图' not in str(i) or 'main' not in str(i)]
-        main_path = [i for i in list_path if '主图' in str(i) or 'main' in str(i)]
+        list_path = [i for i in list_path if '主图' not in str(i) or 'main' not in str(i)]      # 非主图文件的路径
+        main_path = [i for i in list_path if '主图' in str(i) or 'main' in str(i)]              # 主图文件的路径
 
         for i in main_path:
             k = os.path.dirname(i)
             filename = os.path.basename(i)
             if filename[-3:] in ['jpg', 'png']:
-                cut(k, filename, elflag=False)
+                cut(k, filename)
 
     for i in list_path:         # 获取1200*800的图片路径
         if '1200' in i:
             img1200_path.append(i)
+
+    if ifstack:                 # 粘贴png
+        stack.stacker.paste_png_to_jpg(stack_path, img1200_path[0], test=True)
+        for i in img1200_path:
+            stack.stacker.paste_png_to_jpg(stack_path,i)
     
     for i in img1200_path:      # 裁剪
         k = os.path.dirname(i)
@@ -122,5 +128,5 @@ def main(path, ifcolordiv=True, ifmain=True, ifstack=False, stack_path=None):
 
 
 if __name__ == '__main__':
-    main(path=r'D:\41normalMaleT4-B12-15\U009',ifcolordiv=True,ifmain=True)
+    main(path=r'D:\OA\U064',ifcolordiv=True,ifmain=False)
     
