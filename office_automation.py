@@ -109,8 +109,8 @@ def main(path, ifcolordiv=True, ifmain=True, ifstack=False, stack_path=None):
         # endregion
 
     if ifcolordiv:          # 颜色分类
-        color_div.color_divider.main(path=path, erea='area0.npy')       # 分类模特
-        color_div.color_divider.main(path=path, erea='area1.npy')       # 分类衣服
+        color_div.color_divider.main(path=path, area='area0.npy')       # 分类模特
+        color_div.color_divider.main(path=path, area='area1.npy')       # 分类衣服
     else:                   # 尺寸分类
         folder_names = ['800X1200', '800X800', '750X1000']
         for folder_name in folder_names:        # 尝试创建文件夹

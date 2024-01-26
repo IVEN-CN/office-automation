@@ -9,7 +9,7 @@ import re
 # roll = np.ones([500, 500])
 
 
-def get_file_path(file_dir) -> list:
+def get_file_path(file_dir: str) -> list:
     """获取相对路径下文件夹的所有文件的路径
     file_dir: 文件夹路径"""
     path_list = []
@@ -20,10 +20,10 @@ def get_file_path(file_dir) -> list:
 
 
 def color_detect(img_: np.ndarray,      # eara.npy是平铺识别面积，eara0.npy是模特识别面积
-                 colorfile,
-                 ereafile='area.npy') -> bool:
+                 colorfile: str,
+                 areafile: str='area.npy') -> bool:
     range_ = np.load(colorfile)
-    area = np.load(ereafile)
+    area = np.load(areafile)
     lower = range_[0]
     upper = range_[1]
     hsv = cv2.cvtColor(img_, cv2.COLOR_BGR2HSV)
@@ -58,7 +58,8 @@ def mkdir(path):
              '深灰',
              '卡其',
              '虾玉色',
-             '雾霾蓝']
+             '雾霾蓝',
+             '天蓝']
     for i in color:
         try:
             os.mkdir(os.path.join(path, i))
@@ -81,7 +82,7 @@ def mvfile(path: list, target):
         os.system(f'move {i} {target}')
 
 
-def main(*num, path, erea):
+def main(*num, path, area):
     
     for i in num:       # 检查参数是否正确
         if '(' not in i or ')' not in i:
@@ -106,33 +107,33 @@ def main(*num, path, erea):
         img = cv2.imread(i)
         if img is None:
             continue
-        if color_detect(img, '卡其.npy', ereafile=erea):
+        if color_detect(img, '卡其.npy', areafile=area):
             mvfile([i], os.path.join(path, '卡其'))
-        elif color_detect(img, '杏色.npy', ereafile=erea):
+        elif color_detect(img, '杏色.npy', areafile=area):
             mvfile([i], os.path.join(path, '杏色'))
-        elif color_detect(img, '浅蓝.npy', ereafile=erea):
+        elif color_detect(img, '浅蓝.npy', areafile=area):
             mvfile([i], os.path.join(path, '浅蓝'))
-        elif color_detect(img, '浅绿.npy', ereafile=erea):
+        elif color_detect(img, '浅绿.npy', areafile=area):
             mvfile([i], os.path.join(path, '浅绿'))
-        elif color_detect(img, '浅黄.npy', ereafile=erea):
+        elif color_detect(img, '浅黄.npy', areafile=area):
             mvfile([i], os.path.join(path, '浅黄'))
-        elif color_detect(img, '虾玉色.npy', ereafile=erea):
+        elif color_detect(img, '虾玉色.npy', areafile=area):
             mvfile([i], os.path.join(path, '虾玉色'))
-        elif color_detect(img, '粉红.npy', ereafile=erea):
+        elif color_detect(img, '粉红.npy', areafile=area):
             mvfile([i], os.path.join(path, '粉红'))
-        elif color_detect(img, '黑色.npy', ereafile=erea):
+        elif color_detect(img, '黑色.npy', areafile=area):
             mvfile([i], os.path.join(path, '黑色'))
-        elif color_detect(img, '白色.npy', ereafile=erea):
+        elif color_detect(img, '白色.npy', areafile=area):
             mvfile([i], os.path.join(path, '白色'))
-        elif color_detect(img, '浅紫.npy', ereafile=erea):
+        elif color_detect(img, '浅紫.npy', areafile=area):
             mvfile([i], os.path.join(path, '浅紫'))
-        elif color_detect(img, '红色.npy', ereafile=erea):
+        elif color_detect(img, '红色.npy', areafile=area):
             mvfile([i], os.path.join(path, '红色'))
-        elif color_detect(img, '黄色.npy', ereafile=erea):
+        elif color_detect(img, '黄色.npy', areafile=area):
             mvfile([i], os.path.join(path, '黄色'))
-        elif color_detect(img, '深灰.npy', ereafile=erea):
+        elif color_detect(img, '深灰.npy', areafile=area):
             mvfile([i], os.path.join(path, '深灰'))
-        elif color_detect(img, '雾霾蓝.npy', ereafile=erea):
+        elif color_detect(img, '雾霾蓝.npy', areafile=area):
             mvfile([i], os.path.join(path, '雾霾蓝'))
         else:
             print(i)
@@ -140,6 +141,48 @@ def main(*num, path, erea):
     delete_empty_folders(path)
 
 
+def main_more_color(path_: str, area):
+    dict_ = {}
+    path = get_file_path(path_)
+    for file_path in path:
+        img = cv2.imread(file_path)
+        if img is None:
+            continue
+
+        dict_[file_path] = []
+        if color_detect(img, '卡其.npy', areafile=area):
+            dict_[file_path].append('卡其')
+        if color_detect(img, '杏色.npy', areafile=area):
+            dict_[file_path].append('杏色')
+        if color_detect(img, '浅蓝.npy', areafile=area):
+            dict_[file_path].append('浅蓝')
+        if color_detect(img, '浅绿.npy', areafile=area):
+            dict_[file_path].append('浅绿')
+        if color_detect(img, '浅黄.npy', areafile=area):
+            dict_[file_path].append('浅黄')
+        if color_detect(img, '虾玉色.npy', areafile=area):
+            dict_[file_path].append('虾玉色')
+        if color_detect(img, '粉红.npy', areafile=area):
+            dict_[file_path].append('粉红')
+        if color_detect(img, '黑色.npy', areafile=area):
+            dict_[file_path].append('黑色')
+        if color_detect(img, '白色.npy', areafile=area):
+            dict_[file_path].append('白色')
+        if color_detect(img, '浅紫.npy', areafile=area):
+            dict_[file_path].append('浅紫')
+        if color_detect(img, '红色.npy', areafile=area):
+            dict_[file_path].append('红色')
+        if color_detect(img, '黄色.npy', areafile=area):
+            dict_[file_path].append('黄色')
+        if color_detect(img, '深灰.npy', areafile=area):
+            dict_[file_path].append('深灰')
+        if color_detect(img, '雾霾蓝.npy', areafile=area):
+            dict_[file_path].append('雾霾蓝')
+        if color_detect(img, '天蓝.npy', areafile=area):
+            dict_[file_path].append('天蓝')
+    return dict_
+
 if __name__ == '__main__':
-    main(path='D:\\41tm\\KC-41-XOU173', erea='area.npy')  # eara.npy是平铺识别面积，eara0.npy是模特识别面积
+    # main(path='D:\\41tm\\KC-41-XOU173', area='area.npy')  # eara.npy是平铺识别面积，eara0.npy是模特识别面积
     # print(color_detect(cv2.imread('D:\\DIV\\KC-41-XOU145\\750X1000\\1000(7).jpg'), '粉红.npy', 'area.npy'))
+    print(main_more_color('./test', 'area1.npy'))

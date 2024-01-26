@@ -52,7 +52,7 @@ def main(path):
     cv2.createTrackbar('lower_V', 'test', L_V, 255, callback)
     cv2.createTrackbar('upper_V', 'test', H_V, 255, callback)
     # 创建颜色选项
-    cv2.createTrackbar('color', 'test', 0, 13, callback)
+    cv2.createTrackbar('color', 'test', 0, 14, callback)
     cv2.createTrackbar('chooes_area', 'test', 0, 1, callback)
     cv2.createTrackbar('area', 'test', 1200*800, 1200*800, callback)
     # 保存文件的trackbar
@@ -91,7 +91,8 @@ def main(path):
                 10:'深灰',
                 11:'卡其',
                 12:'虾玉色',
-                13:'雾霾蓝'}
+                13:'雾霾蓝',
+                14:'天蓝'}
         color = dist.get(_color)
 
         low_color = np.array([L_H, L_S, L_V])
@@ -120,5 +121,5 @@ def main(path):
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-    main(r'D:\41normalMaleT4-A12-15\U001\1200(14).jpg')
+    main(r'./test/1200(6).jpg')
 
