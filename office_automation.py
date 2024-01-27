@@ -18,7 +18,7 @@ def done(func):             # 装饰器
     return wrapper
 
 @done
-def main(path, ifcolordiv=True, ifmain=True, ifstack=False, stack_path=None):
+def main(path, ifcolordiv=True, ifmain=True, ifstack=False, stack_path=None, morecolor=False):
     """path：工作路径
     ifcolordiv：是否需要颜色分类
     ifmain:是否对主图操作，即若提供了主图并且主图文件夹已经存在(不对主图操作)则为False，否则为True
@@ -109,8 +109,11 @@ def main(path, ifcolordiv=True, ifmain=True, ifstack=False, stack_path=None):
         # endregion
 
     if ifcolordiv:          # 颜色分类
-        color_div.color_divider.main(path=path, area='area0.npy')       # 分类模特
-        color_div.color_divider.main(path=path, area='area1.npy')       # 分类衣服
+        if morecolor == False:
+            color_div.color_divider.main(path=path, area='area0.npy')       # 分类模特
+            color_div.color_divider.main(path=path, area='area1.npy')       # 分类衣服
+        else:
+            color_div.color_divider.main_more_color(path_=path, area='area1.npy')       # 分类多颜色衣服
     else:                   # 尺寸分类
         folder_names = ['800X1200', '800X800', '750X1000']
         for folder_name in folder_names:        # 尝试创建文件夹
@@ -128,5 +131,5 @@ def main(path, ifcolordiv=True, ifmain=True, ifstack=False, stack_path=None):
 
 
 if __name__ == '__main__':
-    main(path=r'D:\OA\U096',ifcolordiv=True,ifmain=False)
+    main(path=r'D:\code_python\office automation\test',ifcolordiv=True,ifmain=False, morecolor=True)
     
