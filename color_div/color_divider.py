@@ -1,6 +1,7 @@
 """将不同颜色的色卡图片分到新的文件夹，文件夹用颜色命名"""
 from math import e
 import os
+import shutil
 import cv2
 import numpy as np
 import os
@@ -193,10 +194,10 @@ def main_more_color(path_: str, area):
             os.mkdir(os.path.join(path_, class_name))
         except FileExistsError:
             pass
-        os.system(f'move {file_path} {os.path.join(path_, class_name)}')
+        shutil.move(file_path, os.path.join(path_, class_name))
             
 
 if __name__ == '__main__':
     # main(path='D:\\41tm\\KC-41-XOU173', area='area.npy')  # eara.npy是平铺识别面积，eara0.npy是模特识别面积
     # print(color_detect(cv2.imread('D:\\DIV\\KC-41-XOU145\\750X1000\\1000(7).jpg'), '粉红.npy', 'area.npy'))
-    print(main_more_color('./test', 'area1.npy'))
+    print(main_more_color(r'D:\code_python\office automation\test', 'area1.npy'))
