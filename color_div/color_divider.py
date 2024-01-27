@@ -59,7 +59,11 @@ def mkdir(path):
              '卡其',
              '虾玉色',
              '雾霾蓝',
-             '天蓝']
+             '天蓝',
+             '水蓝',
+             '橙色',
+             '克莱因蓝',
+             '草绿']
     for i in color:
         try:
             os.mkdir(os.path.join(path, i))
@@ -142,6 +146,9 @@ def main(*num, path, area):
 
 
 def main_more_color(path_: str, area):
+    """识别多种颜色
+    path_: 文件夹路径
+    area: 面积文件路径"""
     dict_ = {}
     path = get_file_path(path_)
     for file_path in path:
@@ -150,36 +157,32 @@ def main_more_color(path_: str, area):
             continue
 
         dict_[file_path] = []
-        if color_detect(img, '卡其.npy', areafile=area):
-            dict_[file_path].append('卡其')
-        if color_detect(img, '杏色.npy', areafile=area):
-            dict_[file_path].append('杏色')
-        if color_detect(img, '浅蓝.npy', areafile=area):
-            dict_[file_path].append('浅蓝')
-        if color_detect(img, '浅绿.npy', areafile=area):
-            dict_[file_path].append('浅绿')
-        if color_detect(img, '浅黄.npy', areafile=area):
-            dict_[file_path].append('浅黄')
-        if color_detect(img, '虾玉色.npy', areafile=area):
-            dict_[file_path].append('虾玉色')
-        if color_detect(img, '粉红.npy', areafile=area):
-            dict_[file_path].append('粉红')
-        if color_detect(img, '黑色.npy', areafile=area):
+
+        # region 对于童装套装的颜色识别
+        if color_detect(img, '草绿.npy', areafile=area) and len(dict_[file_path]) < 3:
+            dict_[file_path].append('草绿')
+        if color_detect(img, '黑色.npy', areafile=area) and len(dict_[file_path]) < 3:
             dict_[file_path].append('黑色')
-        if color_detect(img, '白色.npy', areafile=area):
-            dict_[file_path].append('白色')
-        if color_detect(img, '浅紫.npy', areafile=area):
+        if color_detect(img, '浅紫.npy', areafile=area) and len(dict_[file_path]) < 3:
             dict_[file_path].append('浅紫')
-        if color_detect(img, '红色.npy', areafile=area):
+        if color_detect(img, '红色.npy', areafile=area) and len(dict_[file_path]) < 3:
             dict_[file_path].append('红色')
-        if color_detect(img, '黄色.npy', areafile=area):
+        if color_detect(img, '黄色.npy', areafile=area) and len(dict_[file_path]) < 3:
             dict_[file_path].append('黄色')
-        if color_detect(img, '深灰.npy', areafile=area):
-            dict_[file_path].append('深灰')
-        if color_detect(img, '雾霾蓝.npy', areafile=area):
-            dict_[file_path].append('雾霾蓝')
-        if color_detect(img, '天蓝.npy', areafile=area):
+        if color_detect(img, '天蓝.npy', areafile=area) and len(dict_[file_path]) < 3:
             dict_[file_path].append('天蓝')
+        if color_detect(img, '水蓝.npy', areafile=area) and len(dict_[file_path]) < 3:
+            dict_[file_path].append('水蓝')
+        if color_detect(img, '橙色.npy', areafile=area) and len(dict_[file_path]) < 3:
+            dict_[file_path].append('橙色')
+        if color_detect(img, '克莱因蓝.npy', areafile=area) and len(dict_[file_path]) < 3:
+            dict_[file_path].append('克莱因蓝')
+        if color_detect(img, '粉红.npy', areafile=area) and len(dict_[file_path]) < 3:
+            dict_[file_path].append('粉红')
+        if color_detect(img, '白色.npy', areafile=area) and len(dict_[file_path]) < 3:
+            dict_[file_path].append('白色')
+        # endregion
+            
     return dict_
 
 if __name__ == '__main__':
