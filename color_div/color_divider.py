@@ -59,11 +59,12 @@ def mkdir(path):
              '卡其',
              '虾玉色',
              '雾霾蓝',
-             '天蓝',
-             '水蓝',
-             '橙色',
-             '克莱因蓝',
-             '草绿']
+            #  '天蓝',
+            #  '水蓝',
+            #  '橙色',
+            #  '克莱因蓝',
+            #  '草绿'
+            ]
     for i in color:
         try:
             os.mkdir(os.path.join(path, i))
@@ -183,7 +184,17 @@ def main_more_color(path_: str, area):
             dict_[file_path].append('白色')
         # endregion
             
-    return dict_
+        class_name: str = ''
+        for index, i in enumerate(dict_[file_path]):
+            class_name += i
+            if index != len(dict_[file_path]) - 1:
+                class_name += '+'
+        try:
+            os.mkdir(os.path.join(path_, class_name))
+        except FileExistsError:
+            pass
+        os.system(f'move {file_path} {os.path.join(path_, class_name)}')
+            
 
 if __name__ == '__main__':
     # main(path='D:\\41tm\\KC-41-XOU173', area='area.npy')  # eara.npy是平铺识别面积，eara0.npy是模特识别面积
