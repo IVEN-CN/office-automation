@@ -1,5 +1,8 @@
 from tkinter import *
-import main
+try:
+    import renamer.main1 as main1
+except:
+    import main1
 
 win = Tk()
 win.title("Renamer")
@@ -17,7 +20,7 @@ entry.pack()
 def click():
     if entry.get() == "":
         return None
-    main.main(entry.get())
+    main1.main(entry.get())
 
 button = Button(win, text="确定", command=click)
 button.pack()
