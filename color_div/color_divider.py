@@ -2,6 +2,7 @@
 from math import e
 import os
 import shutil
+import time
 import cv2
 import numpy as np
 import os
@@ -65,6 +66,10 @@ def mkdir(path):
             #  '橙色',
             #  '克莱因蓝',
             #  '草绿'
+             '紫色',
+             '啡色',
+             '彩兰',
+             
             ]
     for i in color:
         try:
@@ -121,26 +126,32 @@ def main(*num, path, area):
             mvfile([i], os.path.join(path, '浅蓝'))
         elif color_detect(img, '浅绿.npy', areafile=area):
             mvfile([i], os.path.join(path, '浅绿'))
-        elif color_detect(img, '浅黄.npy', areafile=area):
-            mvfile([i], os.path.join(path, '浅黄'))
-        elif color_detect(img, '虾玉色.npy', areafile=area):
-            mvfile([i], os.path.join(path, '虾玉色'))
-        elif color_detect(img, '粉红.npy', areafile=area):
-            mvfile([i], os.path.join(path, '粉红'))
+        # elif color_detect(img, '浅黄.npy', areafile=area):
+        #     mvfile([i], os.path.join(path, '浅黄'))
+        # elif color_detect(img, '虾玉色.npy', areafile=area):
+        #     mvfile([i], os.path.join(path, '虾玉色'))
+        # elif color_detect(img, '粉红.npy', areafile=area):
+        #     mvfile([i], os.path.join(path, '粉红'))
         elif color_detect(img, '黑色.npy', areafile=area):
             mvfile([i], os.path.join(path, '黑色'))
-        elif color_detect(img, '白色.npy', areafile=area):
-            mvfile([i], os.path.join(path, '白色'))
         elif color_detect(img, '浅紫.npy', areafile=area):
             mvfile([i], os.path.join(path, '浅紫'))
-        elif color_detect(img, '红色.npy', areafile=area):
-            mvfile([i], os.path.join(path, '红色'))
+        # elif color_detect(img, '红色.npy', areafile=area):
+        #     mvfile([i], os.path.join(path, '红色'))
         elif color_detect(img, '黄色.npy', areafile=area):
             mvfile([i], os.path.join(path, '黄色'))
         elif color_detect(img, '深灰.npy', areafile=area):
             mvfile([i], os.path.join(path, '深灰'))
         elif color_detect(img, '雾霾蓝.npy', areafile=area):
             mvfile([i], os.path.join(path, '雾霾蓝'))
+        elif color_detect(img,'紫色.npy', areafile=area):
+            mvfile([i], os.path.join(path, '紫色'))
+        elif color_detect(img,'啡色.npy', areafile=area):
+            mvfile([i], os.path.join(path, '啡色'))
+        elif color_detect(img,'彩兰.npy', areafile=area):
+            mvfile([i], os.path.join(path, '彩兰'))
+        elif color_detect(img, '白色.npy', areafile=area):
+            mvfile([i], os.path.join(path, '白色'))
         else:
             print(i)
             print('未知颜色')
@@ -198,6 +209,6 @@ def main_more_color(path_: str, area):
             
 
 if __name__ == '__main__':
-    # main(path='D:\\41tm\\KC-41-XOU173', area='area.npy')  # eara.npy是平铺识别面积，eara0.npy是模特识别面积
-    # print(color_detect(cv2.imread('D:\\DIV\\KC-41-XOU145\\750X1000\\1000(7).jpg'), '粉红.npy', 'area.npy'))
-    print(main_more_color(r'D:\code_python\office automation\test', 'area1.npy'))
+    main(path=r'D:\42heavy\U100', area='area1.npy')  # eara.npy是平铺识别面积，eara0.npy是模特识别面积
+    # print(color_detect(cv2.imread(r'D:\OA\U096\1000(6).jpg'), '黄色.npy', 'area1.npy'))
+    # print(main_more_color(r'D:\code_python\office automation\test', 'area1.npy'))
