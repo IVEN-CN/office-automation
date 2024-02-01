@@ -10,6 +10,9 @@ import random
 import time
 import stack.stacker
 
+class PathLike(str):
+    pass
+
 def done(func):             # 装饰器
     def wrapper(*args, **kwargs):
         print('processing...')
@@ -18,7 +21,7 @@ def done(func):             # 装饰器
     return wrapper
 
 @done
-def main(path, ifcolordiv=True, ifmain=True, ifstack=False, stack_path=None, morecolor=False):
+def main(path: PathLike, position: tuple[int, int] | None=None, ifcolordiv=True, ifmain=True, ifstack=False, stack_path=None, morecolor=False):
     """path：工作路径
     ifcolordiv：是否需要颜色分类
     ifmain:是否对主图操作，即若提供了主图并且主图文件夹已经存在(不对主图操作)则为False，否则为True
@@ -27,7 +30,7 @@ def main(path, ifcolordiv=True, ifmain=True, ifstack=False, stack_path=None, mor
     img1200_path = []
     img_path = []
 
-    if ifstack and stack_path is None:          # 检查参数
+    if ifstack and stack_path is None and position is None:          # 检查参数
         raise ValueError('stack_path is None')
 
     if ifmain == False:
@@ -45,9 +48,9 @@ def main(path, ifcolordiv=True, ifmain=True, ifstack=False, stack_path=None, mor
             img1200_path.append(i)
 
     if ifstack:                 # 粘贴png
-        stack.stacker.paste_png_to_jpg(stack_path, img1200_path[0], test=True)
+        stack.stacker.paste_png_to_jpg(stack_path, img1200_path[0], position=position, test=True) # type: ignore
         for i in img1200_path:
-            stack.stacker.paste_png_to_jpg(stack_path,i)
+            stack.stacker.paste_png_to_jpg(stack_path,i, position=position, test=False) # type: ignore
     
     for i in img1200_path:      # 裁剪
         k = os.path.dirname(i)
@@ -131,5 +134,5 @@ def main(path, ifcolordiv=True, ifmain=True, ifstack=False, stack_path=None, mor
 
 
 if __name__ == '__main__':
-    main(path=r'D:\code_python\office automation\test',ifcolordiv=True,ifmain=False, morecolor=True)
+    main(path=r'D:\42heavy\T015', position=(120, 780), ifcolordiv=True, ifmain=True, morecolor=False, ifstack=False, stack_path=r'./2-02.png') # type: ignore
     
