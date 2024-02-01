@@ -12,7 +12,7 @@ def paste(a:np.ndarray, b:np.ndarray, position:tuple[int,int]):
             b[position[0]+i][position[1]+k] = a[i][k]
     return b
 
-def paste_png_to_jpg(png_path, jpg_path, position:tuple[int,int]=(600, 750), test:bool=False):
+def paste_png_to_jpg(png_path, jpg_path, position:tuple[int,int], test:bool=False):
 
     # 调整png图片的大小
     png = cv2.imread(png_path, cv2.IMREAD_UNCHANGED)
