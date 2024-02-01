@@ -6,6 +6,13 @@ try:
 except:
     import renamer.main1 as main1
 
+
+class RenameError(Exception):
+    def __init__(self, text):
+        Exception.__init__(self, text)
+        pass
+
+
 def rename2(path):
     dir = path
     path_list = main1.get_file_path(dir)
@@ -23,10 +30,13 @@ def rename2(path):
             list1000.append(i)
         elif '1200' in i:
             list1200.append(i)
-        
-        list800.sort(key=lambda x: int(re.search(r'\((\d+)\)', x).group(1)), reverse=False)
-        list1000.sort(key=lambda x: int(re.search(r'\((\d+)\)', x).group(1)), reverse=False)
-        list1200.sort(key=lambda x: int(re.search(r'\((\d+)\)', x).group(1)), reverse=False)
+    
+    try:
+        list800.sort(key=lambda x: int(re.search(r'\((\d+)\)', x).group(1)), reverse=False)     # type: ignore
+        list1000.sort(key=lambda x: int(re.search(r'\((\d+)\)', x).group(1)), reverse=False)    # type: ignore
+        list1200.sort(key=lambda x: int(re.search(r'\((\d+)\)', x).group(1)), reverse=False)    # type: ignore
+    except:
+        raise RenameError('文件名不符合规范')
     
     for index, i in enumerate(list800[0:5]):
         k = i
