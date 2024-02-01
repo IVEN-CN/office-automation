@@ -42,6 +42,17 @@ def cut_img(path,filename, elflag=True):
        elflag: 是否是对主图文件夹进行操作"""
     global flag, newpath
     flag = 0
+    fb_flag = 0
+
+    if '前' in filename:
+        newname = filename.replace('前', 'front')
+        os.rename(os.path.join(path, filename), os.path.join(path, newname))
+        fb_flag = 1
+    elif '后' in filename:
+        newname = filename.replace('后', 'back')
+        os.rename(os.path.join(path, filename), os.path.join(path, newname))
+        fb_flag = 1
+
     if '主图' in path:
         newpath = path.replace('主图', 'main')
         os.rename(path, newpath)
@@ -52,6 +63,13 @@ def cut_img(path,filename, elflag=True):
         _path = os.path.join(path, filename)
         cut_img_(_path, path, path,elflag=elflag)
 
+    if fb_flag == 1:
+        if 'front' in newname:                                                      # type: ignore
+            newname = newname.replace('front', '前')                                # type: ignore
+            os.rename(os.path.join(path, newname), os.path.join(path, filename))
+        elif 'back' in newname:                                                     # type: ignore
+            newname = newname.replace('back', '后')                                 # type: ignore
+            os.rename(os.path.join(path, newname), os.path.join(path, filename))
 def cut_cut(*filename, path):
     """filename: 图片的文件名
        path: 主图文件夹的路径"""
@@ -59,4 +77,11 @@ def cut_cut(*filename, path):
         cut_img(path,i)
 
 if __name__ == '__main__':
-    cut_cut('1200(1).jpg','1200(2).jpg','1200(5).jpg','1200(3).jpg','1200(4).jpg', path=r'D:\OA\U064\主图')
+    cut_cut(
+            '1200(3).jpg',
+            # '1200(2).jpg',
+            # '1200(5).jpg',
+            # '1200(1).jpg',
+            '1200(4).jpg', 
+            path=r'D:\42heavy\T015\主图'
+            )
