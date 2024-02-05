@@ -1,0 +1,5 @@
+*.jpg
+*.png
+*.npy
+*.spec
+*\__pycache__
