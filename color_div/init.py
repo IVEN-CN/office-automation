@@ -3,6 +3,7 @@ color   0：红色；   1：绿色；   2：蓝色
 save    0：不保存；  1：保存"""
 import cv2
 import numpy as np
+import argparse
 
 
 def callback(x) -> None:
@@ -129,5 +130,10 @@ def main(path):
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-    main(r'D:\42heavy\U100\6.jpg')
+    arg = argparse.ArgumentParser()
+    arg.add_argument('-p', '--path', default=r'D:\code_python\office automation\2.jpg', type=str, help='图片路径')
+    opt = vars(arg.parse_args())
+
+    main(opt['path'])
+    # main(r'D:\42heavy\U100\6.jpg')
 
