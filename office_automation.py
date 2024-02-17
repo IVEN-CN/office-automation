@@ -136,7 +136,7 @@ def main(path: PathLike, position: tuple[int, int] | None=None, ifcolordiv=True,
 
 if __name__ == '__main__':
     arg = argparse.ArgumentParser()
-    arg.add_argument('--path', default=r'D:\41childA1', type=str, help='工作路径')
+    arg.add_argument('--path', type=str, help='工作路径')
     arg.add_argument('--position', type=tuple, help='粘贴的png的位置')
     arg.add_argument('--ifcolordiv', default=True, type=bool, help='是否需要颜色分类')
     arg.add_argument('--ifmain', default=True, type=bool, help='是否对主图操作，即若提供了主图并且主图文件夹已经存在(不对主图操作)则为False，否则为True')
