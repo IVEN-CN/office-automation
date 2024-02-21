@@ -133,6 +133,17 @@ def main(path: PathLike, position: tuple[int, int] | None=None, ifcolordiv=True,
             else:
                 pass
 
+    # 读取主图文件夹所有图片的路径
+    main_path = renamer.main1.get_file_path(os.path.join(path, '主图'))
+    main_path = [i for i in main_path if '800'in i]
+    main_path = random.sample(main_path, k=2)
+    # 将文件复制到path路径
+    for num, i in enumerate(main_path):
+        shutil.copy(i, path)
+        file_path = os.path.join(path, os.path.basename(i))
+        # 重命名文件
+        os.rename(file_path, os.path.join(path, f'主图({num+1}).jpg'))
+
 
 if __name__ == '__main__':
     arg = argparse.ArgumentParser()
