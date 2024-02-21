@@ -6,16 +6,13 @@
 首先使用终端terminal打开项目文件夹路径，激活python的venv虚拟环境
 
     .\venv\Scripts\activate
-进入color_div文件夹
-
-    cd color_div
 运行init.py
 
     # 在命令结尾的-p(也可以是--path)是初始化图片的路径参数
-    python init.py -p 'D:\PIC.jpg'
+    python color_div/init.py -p 'D:\PIC.jpg'
 
     # 或者
-    python init.py --path 'D:\PIC.jpg'
+    python color_div/init.py --path 'D:\PIC.jpg'
 
 ### 运行init
 
