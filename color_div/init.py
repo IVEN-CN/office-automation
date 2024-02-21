@@ -1,6 +1,7 @@
 """将颜色识别信息储存到文件
 color   0：红色；   1：绿色；   2：蓝色
 save    0：不保存；  1：保存"""
+import os
 import cv2
 import numpy as np
 import argparse
@@ -30,14 +31,16 @@ def save_area(x) -> None:
     else:
         pass
 
-def main(path):
+def main(path_):
+    # 获取path下的所有图片路径
+    lst = os.listdir(path_)
     global low_color, up_color, color, arr, choose_area
     # 创建窗口
     cv2.namedWindow('test',cv2.WINDOW_NORMAL)
     cv2.namedWindow('test1', cv2.WINDOW_NORMAL)
     cv2.namedWindow('test2', cv2.WINDOW_NORMAL)
     
-    img = cv2.imread(path)
+    
 
     # region 创建trackbar
     L_H = 0
@@ -46,6 +49,8 @@ def main(path):
     H_S = 255
     L_V = 0
     H_V = 255
+    index = 0
+    cv2.createTrackbar('index', 'test', index, len(lst)-1, callback)
     cv2.createTrackbar('lower_H', 'test', L_H, 180, callback)
     cv2.createTrackbar('upper_H', 'test', H_H, 180, callback)
     cv2.createTrackbar('lower_S', 'test', L_S, 255, callback)
@@ -62,11 +67,7 @@ def main(path):
     cv2.createTrackbar('save_area', 'test', 0, 1, save_area)
     # endregion
 
-    # 转换色彩空间
-    img1 = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-
     while True:
-        img = cv2.imread(path)
         # region 获取trackbar
         L_H = cv2.getTrackbarPos('lower_H', 'test')
         H_H = cv2.getTrackbarPos('upper_H', 'test')
@@ -77,7 +78,13 @@ def main(path):
         _color = cv2.getTrackbarPos('color', 'test')
         area = cv2.getTrackbarPos('area', 'test')
         choose_area = cv2.getTrackbarPos('chooes_area', 'test')
+        index = cv2.getTrackbarPos('index', 'test')
         # endregion
+
+        path = os.path.join(path_, lst[index])
+        img = cv2.imread(path)
+        # 转换色彩空间
+        img1 = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
         dist = {0:'白色',
                 1:'黑色',
