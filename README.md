@@ -1,28 +1,43 @@
 # 实现自动化办公
 在日常办公，会经常遇到批量修改文件名或者按照颜色分类颜色文件的情况，花费很多时间，也会消耗精力，于是决定开发此程序
-## init使用方法
-首先要先进行颜色阈值的初始化——color_div/init.py
+## 自动化办公的初始化
+首先要先进行颜色阈值的初始化——`color_div/init.py`
+### init简介
+init.py是一个颜色阈值初始化程序，用于初始化颜色阈值，使得在后续的颜色识别中能够更加准确的识别颜色。传入的参数是包含所有文件夹路径。\
+在终端打开的文件夹会作为相对路径的根目录，保存的颜色阈值文件会保存在改目录下的下，建议每个工作文件夹都作为单独的项目，例如童装和成人应该分别初始化
 
+### 使用方法
 首先使用终端terminal打开项目文件夹路径，激活python的venv虚拟环境
 
-    .\venv\Scripts\activate
-运行init.py
+    .\.venv\Scripts\activate
+然后使用cd指令进入工作文件夹中，例如
 
-    # 在命令结尾的-p(也可以是--path)是初始化图片的路径参数
-    python color_div/init.py -p 'D:\PIC.jpg'
+    cd D:\KC-33-171009
+此时，终端显示应该是这样的
+
+    (.venv) D:\KC-33-171009>
+运行init.py
+(PATH->init.py是指init.py的绝对路径)，例如：`D:\code_python\office_automation\color_div\init.py`
+
+    # 在命令结尾的-p(也可以是--path)是初始化图片的路径文件夹的参数
+    python PATH->init.py -p D:\AM66
 
     # 或者
-    python color_div/init.py --path 'D:\PIC.jpg'
+    python PATH->init.py --path D:\AM66
 
-### 运行init
+### 运行init窗口
 
     -运行程序后会出现3个窗口，一个窗口调整阈值滑块，一个窗口显示原图片，一个窗口显示识别后的图片
+
+    - 先调整index滑块，使得显示的图片是需要识别的图片
 
     -滑动阈值滑块，调整HSV颜色阈值，使在尽可能小的阈值范围将衣服尽可能多的显示白色
 
     -调整area滑块，用尽可能大的值使得显示原图像的窗口出现完整的绿色框框住衣服
 
     -调整chooes_area滑块，0对应模特的识别面积，1对应平铺图的识别面积
+
+    - 阈值调整完毕后再次滑动index滑块，确定阈值调整的效果，不会识别到别的颜色，如果效果不佳，反复调整阈值
 
     -滑动两个save滑块完成保存操作，然后esc退出程序
 
@@ -50,19 +65,25 @@
     .\.venv\Scripts\activate
 
     # 运行程序，无需粘贴png图片(默认)，没有多颜色分类(多件童装的形式)(默认)，没有提供额外的主图文件夹(默认)，需要颜色分类，代码实例如下
-    python officeautomation.py --path 'D:\42maleT-A2-2' --ifcolordiv True 
+    python officeautomation.py --path D:\42maleT-A2-2
 
     # 运行程序，无需粘贴png图片(默认)，没有多颜色分类(多件童装的形式)(默认)，没有提供额外的主图文件夹(默认)，不需要需要颜色分类，代码实例如下
-    python officeautomation.py --path 'D:\42maleT-A2-2' --ifcolordiv False
+    python officeautomation.py --path D:\42maleT-A2-2 --ifcolordiv False
 
 ### 2.1版本新增功能：
 添加了多颜色识别的功能，对于三颜色童装和双颜色通知提供了多颜色分类，在main函数的调用将morecolor参数改为True即可
 
 ### 2.2版本新增功能：
-添加了png图片的粘贴，对于多件套装的童装需要粘贴png图片（两件装等），在main函数封装了stack参数，如果需要粘贴，将stack参数改为True,stack_path改为png的路径，position改为粘贴的位置坐标。
+ - 添加了png图片的粘贴
+ - 对于多件套装的童装需要粘贴png图片（两件装等），在main函数封装了stack参数，如果需要粘贴，将stack参数改为True,stack_path改为png的路径，position改为粘贴的位置坐标。
 
 ### 3.0版本新增：
 修改为命令行传参形式
+
+### 3.1版本新增：
+ - 添加新的颜色
+ - 随机将两张主图的800x800尺寸的图片移动到项目根目录下，并且改名为主题(n).jpg
+ - 对于含有中文路径的图片不进行图像识别操作
 
 ### 需要优化的部分：
 对于不同衣服款式会有不同的颜色，在颜色识别的时候我们可以只识别那些会出现的颜色而不识别那些不会出现的颜色，例如款式U075只有颜色红，草绿，黄，雾霾蓝，那么在颜色识别的时候可以将识别彩兰，天蓝等颜色的代码区域注释掉(在代码前面加上#(井号)即可关闭相应的代码块)
