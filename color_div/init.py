@@ -58,7 +58,7 @@ def main(path_):
     cv2.createTrackbar('lower_V', 'test', L_V, 255, callback)
     cv2.createTrackbar('upper_V', 'test', H_V, 255, callback)
     # 创建颜色选项
-    cv2.createTrackbar('color', 'test', 0, 22, callback)
+    cv2.createTrackbar('color', 'test', 0, 23, callback)
     cv2.createTrackbar('chooes_area', 'test', 0, 1, callback)
     cv2.createTrackbar('area', 'test', 1200*800, 1200*800, callback)
     # 保存文件的trackbar
@@ -108,7 +108,8 @@ def main(path_):
                 19:'紫色',
                 20:'彩兰',
                 21:'啡色',
-                22:'花灰'
+                22:'花灰',
+                23:'灰蓝'
                 }
         color = dist.get(_color)
 

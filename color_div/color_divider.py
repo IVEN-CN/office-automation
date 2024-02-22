@@ -72,7 +72,8 @@ def mkdir(path):
              '紫色',
              '啡色',
              '彩兰',
-             '花灰'
+             '花灰',
+             '灰蓝'
              
             ]
     for i in color:
@@ -104,6 +105,8 @@ def main(*num, path, area):
             raise ValueError('参数错误,main参数应该是类似(1)的形式')
         
     file_path = get_file_path(path)
+    # 去除file_path中含有中文的元素
+    file_path = [i for i in file_path if re.search(r'[\u4e00-\u9fa5]', i) is None]
     for i in file_path:
         try:
             match = re.search(r'\((\d+)\)', i)
@@ -158,6 +161,8 @@ def main(*num, path, area):
             mvfile([i], os.path.join(path, '花灰'))
         elif color_detect(img, '白色.npy', areafile=area):
             mvfile([i], os.path.join(path, '白色'))
+        elif color_detect(img, '灰蓝.npy', areafile=area):
+            mvfile([i], os.path.join(path, '灰蓝'))
         else:
             print(i)
             print('未知颜色')
