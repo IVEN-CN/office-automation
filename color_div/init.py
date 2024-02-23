@@ -126,7 +126,7 @@ def main(path_):
             x, y, w, h = cv2.boundingRect(contour)
             brcnt = np.array([[[x, y]], [[x + w, y]], [[x + w, y + h]], [[x, y + h]]])
             if w * h >= area:
-                cv2.drawContours(img, [brcnt], -1, (0, 255, 0), 2)
+                cv2.drawContours(img, [brcnt], -1, (0, 255, 0), 20)
                 # brcnt是矩形的四个顶点坐标，-1表示画出矩形，（255,255,255）是颜色，2是线宽
 
         cv2.imshow('test2', img)
@@ -140,7 +140,7 @@ def main(path_):
 
 if __name__ == '__main__':
     arg = argparse.ArgumentParser()
-    arg.add_argument('-p', '--path', default=r'D:\code_python\office automation\2.jpg', type=str, help='图片路径')
+    arg.add_argument('-p', '--path', type=str, help='图片路径')
     opt = vars(arg.parse_args())
 
     main(opt['path'])
