@@ -28,6 +28,7 @@ def main(path: PathLike, position: tuple[int, int] | None=None, ifcolordiv=True,
     ifmain:是否对主图操作，即若提供了主图并且主图文件夹已经存在(不对主图操作)则为False，否则为True
     ifstack:是否需要贴图，对于套装图片，需要贴图，对于单件图片，不需要贴图"""
     list_path = renamer.main1.get_file_path(path)
+    list_path = [i for i in list_path if 'jpg' in i or 'png' in i or 'jpeg' in i]  # 获取所有图片路径
     img1200_path = []
     img_path = []
 

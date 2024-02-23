@@ -34,6 +34,7 @@ def save_area(x) -> None:
 def main(path_):
     # 获取path下的所有图片路径
     lst = os.listdir(path_)
+    lst = [i for i in lst if 'jpg' in i or 'png' in i or 'jpeg' in i]
     global low_color, up_color, color, arr, choose_area
     # 创建窗口
     cv2.namedWindow('test',cv2.WINDOW_NORMAL)
