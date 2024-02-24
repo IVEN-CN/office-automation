@@ -5,7 +5,6 @@ import shutil
 import os
 import color_div.color_divider
 import re
-import os
 import random
 import time
 import argparse
