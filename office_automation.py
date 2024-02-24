@@ -149,14 +149,35 @@ def main(path: PathLike, position: tuple[int, int] | None=None, ifcolordiv=True,
 if __name__ == '__main__':
     arg = argparse.ArgumentParser()
     arg.add_argument('--path', type=str, help='工作路径')
-    arg.add_argument('--position', type=tuple, help='粘贴的png的位置')
-    arg.add_argument('--ifcolordiv', default=True, type=bool, help='是否需要颜色分类')
-    arg.add_argument('--ifmain', default=True, type=bool, help='是否对主图操作，即若提供了主图并且主图文件夹已经存在(不对主图操作)则为False，否则为True')
-    arg.add_argument('--morecolor', default=False, type=bool, help='是否是多件衣服图片')
-    arg.add_argument('--ifstack', default=False, type=bool, help='是否需要贴图png')
+    arg.add_argument('--xposition', type=int, help='粘贴的png的x位置')
+    arg.add_argument('--yposition', type=int, help='粘贴的png的y位置')
+    arg.add_argument('--ifcolordiv', default='true', type=str, help='是否需要颜色分类')
+    arg.add_argument('--ifmain', default='true', type=str, help='是否对主图操作，即若提供了主图并且主图文件夹已经存在(不对主图操作)则为False，否则为True')
+    arg.add_argument('--morecolor', default='true', type=str, help='是否是多件衣服图片')
+    arg.add_argument('--ifstack', default='true', type=str, help='是否需要贴图png')
     arg.add_argument('--stack_path', type=str, help='粘贴的png的路径')
     opt = arg.parse_args()
 
-    main(path=opt.path, position=opt.position, ifcolordiv=opt.ifcolordiv, ifmain=opt.ifmain, morecolor=opt.morecolor, ifstack=opt.ifstack, stack_path=opt.stack_path) # type: ignore
-    # main(path=r'D:\41childA1', position=(140, 760), ifcolordiv=True, ifmain=True, morecolor=True, ifstack=True, stack_path=r'./2-02.png') # type: ignore
+    # region 参数处理
+    if opt.ifcolordiv == 'true':
+        opt.ifcolordiv = True
+    else:
+        opt.ifcolordiv = False
     
+    if opt.ifmain == 'true':
+        opt.ifmain = True
+    else:
+        opt.ifmain = False
+    
+    if opt.morecolor == 'true':
+        opt.morecolor = True
+    else:
+        opt.morecolor = False
+
+    if opt.ifstack == 'true':
+        opt.ifstack = True
+    else:
+        opt.ifstack = False
+    # endregion
+
+    main(path=opt.path, position=(opt.xposition,opt.yposition), ifcolordiv=opt.ifcolordiv, ifmain=opt.ifmain, morecolor=opt.morecolor, ifstack=opt.ifstack, stack_path=opt.stack_path) # type: ignore
