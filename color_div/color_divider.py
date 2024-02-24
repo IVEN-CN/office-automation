@@ -175,6 +175,7 @@ def main_more_color(path_: str, area):
     area: 面积文件路径"""
     dict_ = {}
     path = get_file_path(path_)
+    path = [i for i in path if re.search(r'[\u4e00-\u9fa5]', i) is None]
     for file_path in path:
         img = cv2.imread(file_path)
         if img is None:
@@ -216,7 +217,7 @@ def main_more_color(path_: str, area):
             os.mkdir(os.path.join(path_, class_name))
         except FileExistsError:
             pass
-        shutil.move(file_path, os.path.join(path_, class_name))
+        mvfile([file_path], os.path.join(path_, class_name))
             
 
 if __name__ == '__main__':
