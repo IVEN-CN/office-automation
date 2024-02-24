@@ -1,6 +1,12 @@
 # 实现自动化办公
 在日常办公，会经常遇到批量修改文件名或者按照颜色分类颜色文件的情况，花费很多时间，也会消耗精力，于是决定开发此程序
 ## 运行之前的操作
+打开想放置此代码的文件夹，例如D盘,那就打开D盘，鼠标右键，选择在终端中打开，然后输入以下命令，如图
+<div align="center">
+    <a href="./">
+        <img src="./.pic/example0.jpg" width="79%"/>
+    </a>
+</div>
 若在线上代码仓库gitee上看到此开源代码，需要先将代码克隆到本地，然后在本地运行代码、
 使用一下代码克隆代码到本地
 
@@ -37,24 +43,48 @@ init.py是一个颜色阈值初始化程序，用于初始化颜色阈值，使�
 在终端打开的文件夹会作为相对路径的根目录，保存的颜色阈值文件会保存在改目录下的下，建议每个工作文件夹都作为单独的项目，例如童装和成人应该分别初始化
 
 ### 使用方法
-找到虚拟环境的路径，然后激活环境
-使用终端terminal打开项目文件夹路径，激活python的venv虚拟环境
+**建议直接讲图片保存在office-automation文件夹下，下面的指令都是讲工作文件夹放在office-automation下进行操作的**\
+然后鼠标右键，在终端打开office-automation文件夹
+如下图
+<div align="center">
+    <a href="./">
+        <img src="./.pic/example3.jpg" width="95%"/>
+    </a>
+</div>
+然后激活环境
 
     .\.venv\Scripts\activate
 然后使用cd指令进入工作文件夹中，例如
 
-    cd D:\KC-33-171009
+    cd 42child3pureA
 此时，终端显示应该是这样的
 
-    (.venv) D:\KC-33-171009>
+    (.venv) (base) PS D:\code_python\office_automation\42child3pureA>
+如图
+<div align="center">
+    <a href="./">
+        <img src="./.pic/venv.jpg" width="95%"/>
+    </a>
+</div>
 运行init.py
-(PATH->init.py是指init.py的绝对路径)，例如：`D:\code_python\office_automation\color_div\init.py`
+(PATH->init.py是指init.py的路径)，例如：
+
+`D:\code_python\office_automation\color_div\init.py`
 
     # 在命令结尾的-p(也可以是--path)是初始化图片的路径文件夹的参数
     python PATH->init.py -p D:\AM66
 
     # 或者
     python PATH->init.py --path D:\AM66
+如图
+<div align="center">
+    <a href="./">
+        <img src="./.pic/example4.jpg" width="95%"/>
+    </a>
+</div>
+
+**注意：**\
+图中的`./`是指`D:\code_python\office_automation\42child3pureA`下的根目录，即`D:\code_python\office_automation\42child3pureA`
 
 ### 运行init窗口
 
@@ -71,6 +101,12 @@ init.py是一个颜色阈值初始化程序，用于初始化颜色阈值，使�
     -滑动阈值滑块，调整HSV颜色阈值，使在尽可能小的阈值范围将衣服尽可能多的显示白色
 
     -调整area滑块，用尽可能大的值使得显示原图像的窗口出现完整的绿色框框住衣服
+如图
+<div align="center">
+    <a href="./">
+        <img src="./.pic/example2.jpg" width="95%"/>
+    </a>
+</div>
 
     -调整chooes_area滑块，0对应模特的识别面积，1对应平铺图的识别面积
 
@@ -105,6 +141,18 @@ init.py是一个颜色阈值初始化程序，用于初始化颜色阈值，使�
 
 
     -滑动两个save滑块完成保存操作，然后一定要把save滑块归零，然后调整index设置其他颜色的阈值
+完成初始化后，文件夹的结构应该是这样的
+<div align="center">
+    <a href="./">
+        <img src="./.pic/stract1.jpg" width="95%"/>
+    </a>
+</div>
+或
+<div align="center">
+    <a href="./">
+        <img src="./.pic/stract2.jpg" width="95%"/>
+    </a>
+</div>
 
 --! 注意，每个面积保存一次后，理论上来说不需要再调整 !--
 
@@ -115,16 +163,16 @@ init.py是一个颜色阈值初始化程序，用于初始化颜色阈值，使�
 以上图的工作文件夹为例，程序会对所有图片进行裁剪和分类\
 在终端执行命令(需要激活虚拟环境)
     
-然后使用cd指令进入工作文件夹中，例如
+然后使用cd指令进入工作文件夹中，如果已经进入，不必理会，例如
 
-    cd D:\KC-33-171009
+    cd 42child3pureA
 
-激活虚拟环境
+激活虚拟环境，如果已经激活，不必理会
 
     .\.venv\Scripts\activate
 此时，终端显示应该是这样的
 
-    (.venv) D:\KC-33-171009>
+    (.venv) (base) PS D:\code_python\office_automation\42child3pureA>
 
 __运行程序，无需粘贴png图片(默认)，没有多颜色分类(多件童装的形式)(默认)，没有提供额外的主图文件夹(默认)，需要颜色分类，代码实例如下__
 
@@ -143,16 +191,24 @@ __运行程序，无需粘贴png图片(默认)，没有多颜色分类(多件童
 
 以下是多颜色的童装并且需要粘贴png的代码实例
 
-    python path->office_automation.py --path D:\KC-33-171009\AM66 --morecolor True --stack True --stack_path path->png --position 0,0
+    python path->office_automation.py --path D:\KC-33-171009\AM66 --morecolor true --stack true --stack_path path->png --xposition 90 --yposition 760
+如图
+<div align="center">
+    <a href="./">
+        <img src="./.pic/more_example1.jpg" width="79%"/>
+    </a>
+</div>
+
 以上指令\
-参数`--position`是png的粘贴位置\
+参数`--xposition`是png的粘贴x轴(横向)位置\
+参数`--yposition`是png的粘贴y轴(纵向)位置\
 参数`--path`是图片所在的路径\
-参数`--morecolor`是指是(True)否(False)是多颜色识别\
-参数`--stack`是指是(True)否(False)是粘贴png图片\
+参数`--morecolor`是指是(true)否(false)是多颜色识别\
+参数`--stack`是指是(true)否(false)是粘贴png图片\
 参数`--stack_path`是指png图片的路径\
 `path->office_autmation.py`是office_automation.py的路径，`path->png`同理
 ## 如果png粘贴位置不理想的处理方法
-若出现png粘贴位置不合预期，将窗口切回终端，按ctrl+C强行终止程序，然后按`上箭头`键重复上一次运行的命令，调整`--position`参数的值，然后回车运行
+若出现png粘贴位置不合预期，将窗口切回终端，按ctrl+C，然后关掉窗口，强行终止程序，然后按`上箭头`键重复上一次运行的命令，调整`--xposition`和`--yposition`参数的值，然后回车运行
 
 ### 2.1版本新增功能：
  - 添加了多颜色识别的功能，对于三颜色童装和双颜色通知提供了多颜色分类，在main函数的调用将morecolor参数改为True即可
