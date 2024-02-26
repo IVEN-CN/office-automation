@@ -29,8 +29,8 @@ def cut_img_(path1200:str, path1000:str='./', path800:str='./', elflag:bool=True
     path1000 = os.path.join(path1000, name1000)
     path800 = os.path.join(path800, name800)
 
-    cv2.imwrite(path1000, img2)
-    cv2.imwrite(path800, img1)
+    cv2.imwrite(path1000, img2, [cv2.IMWRITE_JPEG_QUALITY, 99, cv2.IMWRITE_JPEG_OPTIMIZE, 1])
+    cv2.imwrite(path800, img1, [cv2.IMWRITE_JPEG_QUALITY, 99, cv2.IMWRITE_JPEG_OPTIMIZE, 1])
 
     if flag == 1 and elflag:
         newname = newpath.replace('main', '主图')
@@ -78,10 +78,10 @@ def cut_cut(*filename, path):
 
 if __name__ == '__main__':
     cut_cut(
-            '1200(3).jpg',
+            '1200(1).jpg',
             # '1200(2).jpg',
-            # '1200(5).jpg',
-            # '1200(1).jpg',
-            '1200(4).jpg', 
-            path=r'D:\42heavy\T015\主图'
+            # '1200(3).jpg',
+            # '1200(4).jpg', 
+            '1200(5).jpg',
+            path=r'D:\code_python\office_automation\2-26spacious\U258\主图'
             )
