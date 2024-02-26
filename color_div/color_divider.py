@@ -125,6 +125,7 @@ def main(*num, path, area):
         img = cv2.imread(i)
         if img is None:
             continue
+        # region 单件装颜色识别
         if color_detect(img, '卡其.npy', areafile=area):
             mvfile([i], os.path.join(path, '卡其'))
         elif color_detect(img, '杏色.npy', areafile=area):
@@ -166,6 +167,7 @@ def main(*num, path, area):
         else:
             print(i)
             print('未知颜色')
+        # endregion
     delete_empty_folders(path)
 
 
