@@ -1,3 +1,4 @@
+"""将过审的款号通过cnn识别图片中的文字，将识别的文字存储到csv文件中，作为已过审的款号数据库"""
 import os
 import tkinter as tk
 import csv
@@ -5,6 +6,7 @@ import win32com.client as win32
 import zipfile
 import cv2
 import easyocr
+import shutil
 
 def writein():
     with open('已通过.csv', 'a+') as f:
@@ -71,6 +73,7 @@ def deal_img(path:str):
                             print(f'text:{text},probablity:{prob}')
                             pass_lst.append(text)
                         os.remove(os.path.join(path+'/xl/media', i))
+    shutil.rmtree(os.path.join(path, 'xl'))
                     
                     # endregion
     
