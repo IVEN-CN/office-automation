@@ -194,7 +194,7 @@ __运行程序，无需粘贴png图片(默认)，没有多颜色分类(多件童
 如图
 <div align="center">
     <a href="./">
-        <img src="./.pic/more_example1.jpg" width="79%"/>
+        <img src="./.pic/more_example1.jpg" width="95%"/>
     </a>
 </div>
 
