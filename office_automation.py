@@ -152,8 +152,8 @@ if __name__ == '__main__':
     arg.add_argument('--yposition', type=int, help='粘贴的png的y位置')
     arg.add_argument('--ifcolordiv', default='true', type=str, help='是否需要颜色分类')
     arg.add_argument('--ifmain', default='true', type=str, help='是否对主图操作，即若提供了主图并且主图文件夹已经存在(不对主图操作)则为False，否则为True')
-    arg.add_argument('--morecolor', default='true', type=str, help='是否是多件衣服图片')
-    arg.add_argument('--ifstack', default='true', type=str, help='是否需要贴图png')
+    arg.add_argument('--morecolor', default='false', type=str, help='是否是多件衣服图片')
+    arg.add_argument('--ifstack', default='false', type=str, help='是否需要贴图png')
     arg.add_argument('--stack_path', type=str, help='粘贴的png的路径')
     opt = arg.parse_args()
 
