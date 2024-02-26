@@ -160,23 +160,31 @@ if __name__ == '__main__':
     # region 参数处理
     if opt.ifcolordiv == 'true':
         opt.ifcolordiv = True
-    else:
+    elif opt.ifcolordiv == 'false':
         opt.ifcolordiv = False
+    else:
+        raise ValueError('ifcolordiv is unexpected value,it should be true or false')
     
     if opt.ifmain == 'true':
         opt.ifmain = True
-    else:
+    elif opt.ifmain == 'false':
         opt.ifmain = False
+    else:
+        raise ValueError('ifcolordiv is unexpected value,it should be true or false')
     
     if opt.morecolor == 'true':
         opt.morecolor = True
-    else:
+    elif opt.morecolor == 'false':
         opt.morecolor = False
+    else:
+        raise ValueError('ifcolordiv is unexpected value,it should be true or false')
 
     if opt.ifstack == 'true':
         opt.ifstack = True
-    else:
+    elif opt.ifstack == 'false':
         opt.ifstack = False
+    else:
+        raise ValueError('ifcolordiv is unexpected value,it should be true or false')
     # endregion
 
     main(path=opt.path, position=(opt.xposition,opt.yposition), ifcolordiv=opt.ifcolordiv, ifmain=opt.ifmain, morecolor=opt.morecolor, ifstack=opt.ifstack, stack_path=opt.stack_path) # type: ignore
