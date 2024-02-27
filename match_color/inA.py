@@ -38,6 +38,8 @@ def ui():
     win.mainloop()
 
 def xls2xlsx(path:str):
+    """将xls文件批量转换为xlsx文件
+    * path: 文件夹路径"""
     path_list = os.listdir(path)
     path_list = [i for i in path_list if '否决' not in i]
     e = win32.gencache.EnsureDispatch('Excel.Application')
@@ -49,6 +51,10 @@ def xls2xlsx(path:str):
         wb.Close()
 
 def deal_img(path:str):
+    """在xlsx文件所在文件夹中批量识别xlsx内的图片中的文字
+    ----------------
+    用于将通过的款号记录进入数据库，方便后期查询
+    * path: 文件夹路径"""
     # region 解压图片
     reader = easyocr.Reader(['ch_sim', 'en'], gpu=True)
     pass_lst = []
@@ -63,7 +69,7 @@ def deal_img(path:str):
                     path_list = [i for i in os.listdir(img_path)]
     # endregion
                     
-                    # region 读取图片
+    # region 读取图片
                     for i in path_list:
                         img = cv2.imread(os.path.join(img_path, i))
                         img = cv2.cvtColor(img[0:55,:], cv2.COLOR_BGR2GRAY)
@@ -75,10 +81,10 @@ def deal_img(path:str):
                         os.remove(os.path.join(path+'/xl/media', i))
     shutil.rmtree(os.path.join(path, 'xl'))
                     
-                    # endregion
+    # endregion
     
     # region 存储已通过的款号
-    with open('已通过.csv', 'w', newline='') as f:
+    with open('已通过.csv', 'a', newline='') as f:
         writer = csv.writer(f)
         for i in pass_lst:
             writer.writerow([i])
