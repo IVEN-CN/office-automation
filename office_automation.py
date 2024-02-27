@@ -135,10 +135,15 @@ def main(path: PathLike, position: tuple[int, int] | None=None, ifcolordiv=True,
 
     # 读取主图文件夹所有图片的路径
     main_path = renamer.main1.get_file_path(os.path.join(path, '主图'))
-    main_path = [i for i in main_path if '800'in i]
-    main_path = random.sample(main_path, k=2)
+    main_path_800 = [i for i in main_path if '800'in i]
+    main_path_800 = random.sample(main_path_800, k=1)
+    num = re.search(r'\((\d+)\)', main_path_800[0]).group(1)    # type: ignore
+    filename = f'1200({num})'
+    for i in main_path:
+        if filename in i:
+            main_path_800.append(i)
     # 将文件复制到path路径
-    for num, i in enumerate(main_path):
+    for num, i in enumerate(main_path_800):
         shutil.copy(i, path)
         file_path = os.path.join(path, os.path.basename(i))
         # 重命名文件
