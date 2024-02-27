@@ -50,13 +50,21 @@ def xls2xlsx(path:str):
         wb.SaveAs(os.path.join(path, i+'x'), FileFormat=51)
         wb.Close()
 
+def detect(_img):
+    reader = easyocr.Reader(['ch_sim', 'en'], gpu=True)
+    img = cv2.cvtColor(_img[0:55,:], cv2.COLOR_BGR2GRAY)
+    res = reader.readtext(img)
+    for (bbox, text, prob) in res:  # bbox:文字框坐标，text:识别的文字，prob:识别的概率
+        text = text.replace(' ', '').replace('I', '1').replace('$', 'S').replace('[J', 'U').replace('}', 'K').replace('1J', 'U')
+        print(f'text:{text},probablity:{prob}')
+        return text
+    
 def deal_img(path:str):
     """在xlsx文件所在文件夹中批量识别xlsx内的图片中的文字
     ----------------
     用于将通过的款号记录进入数据库，方便后期查询
     * path: 文件夹路径"""
     # region 解压图片
-    reader = easyocr.Reader(['ch_sim', 'en'], gpu=True)
     pass_lst = []
     path_list = os.listdir(path)
     path_list = [i for i in path_list if 'xlsx' in i]
@@ -72,12 +80,8 @@ def deal_img(path:str):
     # region 读取图片
                     for i in path_list:
                         img = cv2.imread(os.path.join(img_path, i))
-                        img = cv2.cvtColor(img[0:55,:], cv2.COLOR_BGR2GRAY)
-                        res = reader.readtext(img)
-                        for (bbox, text, prob) in res:  # bbox:文字框坐标，text:识别的文字，prob:识别的概率
-                            text = text.replace(' ', '').replace('I', '1').replace('$', 'S').replace('[J', 'U').replace('}', 'K').replace('1J', 'U')
-                            print(f'text:{text},probablity:{prob}')
-                            pass_lst.append(text)
+                        text = detect(img)
+                        pass_lst.append(text)
                         os.remove(os.path.join(path+'/xl/media', i))
     shutil.rmtree(os.path.join(path, 'xl'))
                     
