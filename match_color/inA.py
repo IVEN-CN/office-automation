@@ -2,6 +2,7 @@
 import os
 import tkinter as tk
 import csv
+from openpyxl import load_workbook
 import win32com.client as win32
 import zipfile
 import cv2
@@ -46,16 +47,29 @@ def xls2xlsx(path:str):
     e.DisplayAlerts = False  # 禁用警告
     e.EnableEvents = False  # 禁用宏
     for i in path_list:
-        wb = e.Workbooks.Open(os.path.join(path, i))
-        wb.SaveAs(os.path.join(path, i+'x'), FileFormat=51)
-        wb.Close()
+        if 'xlsm' not in i and 'xlsx' not in i:
+            wb = e.Workbooks.Open(os.path.join(path, i))
+            wb.SaveAs(os.path.join(path, i+'x'), FileFormat=51)
+            wb.Close()
+        elif 'xlsx' not in i and 'xlsm' in i:
+            # 加载.xlsm文件
+            wb = load_workbook(filename=os.path.join(path, i), read_only=False)
+            # 保存为.xlsx文件
+            filename = i[:-1]+'x'
+            wb.save(os.path.join(path, filename))
+        else:
+            pass
+        print(f'{i}转换完成')
+
+reader = easyocr.Reader(['en'], gpu=True)
 
 def detect(_img):
-    reader = easyocr.Reader(['ch_sim', 'en'], gpu=True)
     img = cv2.cvtColor(_img[0:55,:], cv2.COLOR_BGR2GRAY)
     res = reader.readtext(img)
     for (bbox, text, prob) in res:  # bbox:文字框坐标，text:识别的文字，prob:识别的概率
         text = text.replace(' ', '').replace('I', '1').replace('$', 'S').replace('[J', 'U').replace('}', 'K').replace('1J', 'U')
+        if prob < 0.001:
+            break
         print(f'text:{text},probablity:{prob}')
         return text
     
@@ -81,17 +95,21 @@ def deal_img(path:str):
                     for i in path_list:
                         img = cv2.imread(os.path.join(img_path, i))
                         text = detect(img)
-                        pass_lst.append(text)
+                        if text is not None:
+                            pass_lst.append(text)
                         os.remove(os.path.join(path+'/xl/media', i))
     shutil.rmtree(os.path.join(path, 'xl'))
                     
     # endregion
     
     # region 存储已通过的款号
-    with open('已通过.csv', 'a', newline='') as f:
+    with open('已通过.csv', 'a+', newline='') as f:
         writer = csv.writer(f)
+        reader_csv = csv.reader(f)
+        lst = [i[0] for i in reader_csv]
         for i in pass_lst:
-            writer.writerow([i])
+            if i not in lst:
+                writer.writerow([i])
 
 def test(path:str):
     file = os.listdir(path)
@@ -118,3 +136,4 @@ def main(path:str):
 if __name__ == '__main__':
     # test(r'D:\code_python\office_automation\match_color\test\xl\media')
     deal_img(r'D:\code_python\office_automation\match_color\test')
+    # main(r'D:\code_python\office_automation\match_color\test')
