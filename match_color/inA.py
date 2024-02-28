@@ -79,37 +79,37 @@ def deal_img(path:str):
     用于将通过的款号记录进入数据库，方便后期查询
     * path: 文件夹路径"""
     # region 解压图片
-    pass_lst = []
     path_list = os.listdir(path)
     path_list = [i for i in path_list if 'xlsx' in i]
     for i in path_list:
         with zipfile.ZipFile(os.path.join(path,i)) as f:        # 解压xlsx文件
-            for file in f.namelist():
-                if 'xl/media' in file:
-                    f.extract(file, path)
-                    img_path = os.path.join(path, 'xl/media')
-                    path_list = [i for i in os.listdir(img_path)]
-    # endregion
-                    
-    # region 读取图片
-                    for i in path_list:
-                        img = cv2.imread(os.path.join(img_path, i))
-                        text = detect(img)
-                        if text is not None:
-                            pass_lst.append(text)
-                        os.remove(os.path.join(path+'/xl/media', i))
-    shutil.rmtree(os.path.join(path, 'xl'))
-                    
+            with open('已通过.csv', 'a+', newline='') as f1:
+                for file in f.namelist():
+                    if 'xl/media' in file:
+                        f.extract(file, path)
+                        img_path = os.path.join(path, 'xl/media')
+                        path_list = [i for i in os.listdir(img_path)]
+        # endregion
+                        
+        # region 读取图片
+                        for i in path_list:
+                            img = cv2.imread(os.path.join(img_path, i))
+                            text = detect(img)
+                            if text is not None:
+                                writer = csv.writer(f1)
+                                reader_csv = csv.reader(f1)
+                                lst = [i[0] for i in reader_csv]
+                                if text not in lst:
+                                    if '-' in text:
+                                        writer.writerow([text])
+                            os.remove(os.path.join(path+'/xl/media', i))
+        shutil.rmtree(os.path.join(path, 'xl'))
+                        
     # endregion
     
     # region 存储已通过的款号
-    with open('已通过.csv', 'a+', newline='') as f:
-        writer = csv.writer(f)
-        reader_csv = csv.reader(f)
-        lst = [i[0] for i in reader_csv]
-        for i in pass_lst:
-            if i not in lst:
-                writer.writerow([i])
+    
+
 
 def test(path:str):
     file = os.listdir(path)
