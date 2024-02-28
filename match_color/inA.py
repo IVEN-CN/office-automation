@@ -102,6 +102,8 @@ def deal_img(path:str):
                                 if text not in lst:
                                     if '-' in text:
                                         writer.writerow([text])
+                                    elif len(text) == 4:
+                                        writer.writerow([text])
                             os.remove(os.path.join(path+'/xl/media', i))
         shutil.rmtree(os.path.join(path, 'xl'))
                         
