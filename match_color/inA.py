@@ -67,7 +67,7 @@ def detect(_img):
     img = cv2.cvtColor(_img[0:55,:], cv2.COLOR_BGR2GRAY)
     res = reader.readtext(img)
     for (bbox, text, prob) in res:  # bbox:文字框坐标，text:识别的文字，prob:识别的概率
-        text = text.replace(' ', '').replace('I', '1').replace('$', 'S').replace('[J', 'U').replace('}', 'K').replace('1J', 'U')
+        text = text.replace(' ', '').replace('I', '1').replace('$', 'S').replace('[J', 'U').replace('}', 'K').replace('1J', 'U').repleace('O','0').replace('o','0').replace('z','2')
         if prob < 0.001:
             break
         print(f'text:{text},probablity:{prob}')
