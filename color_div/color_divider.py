@@ -164,6 +164,16 @@ def main(*num, path, area):
             mvfile([i], os.path.join(path, '白色'))
         elif color_detect(img, '灰蓝.npy', areafile=area):
             mvfile([i], os.path.join(path, '灰蓝'))
+        elif color_detect(img, '天蓝.npy', areafile=area):
+            mvfile([i], os.path.join(path, '天蓝'))
+        elif color_detect(img, '水蓝.npy', areafile=area):
+            mvfile([i], os.path.join(path, '水蓝'))
+        elif color_detect(img, '橙色.npy', areafile=area):
+            mvfile([i], os.path.join(path, '橙色'))
+        elif color_detect(img, '克莱因蓝.npy', areafile=area):
+            mvfile([i], os.path.join(path, '克莱因蓝'))
+        elif color_detect(img, '草绿.npy', areafile=area):
+            mvfile([i], os.path.join(path, '草绿'))
         else:
             print(i)
             print('未知颜色')
@@ -223,6 +233,9 @@ def main_more_color(path_: str, area):
             
 
 if __name__ == '__main__':
-    main(path=r'D:\42male2-5\S255', area='area1.npy')  # eara.npy是平铺识别面积，eara0.npy是模特识别面积
+#     main(path=r'D:\42male2-5\S255', area='area1.npy')  # eara.npy是平铺识别面积，eara0.npy是模特识别面积
     # print(color_detect(cv2.imread(r'D:\OA\U096\1000(6).jpg'), '黄色.npy', 'area1.npy'))
     # print(main_more_color(r'D:\code_python\office automation\test', 'area1.npy'))
+    img = cv2.imread(r"D:\42girl2-28\B079\1000(10).jpg")
+    res = color_detect(img, r"D:\code_python\office_automation\childnpy\草绿.npy", areafile=r"D:\code_python\office_automation\childnpy\area1.npy")
+    print(res)
