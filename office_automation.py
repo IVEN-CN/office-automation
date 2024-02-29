@@ -151,7 +151,10 @@ def main(path: PathLike, position: tuple[int, int] | None=None, ifcolordiv=True,
         os.rename(file_path, os.path.join(path, f'主图({num+1}).jpg'))
 
     # 制作详情页
-    ct(path)
+    try:
+        ct(path)
+    except FileNotFoundError:
+        pass
 
 if __name__ == '__main__':
     arg = argparse.ArgumentParser()
