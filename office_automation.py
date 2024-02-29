@@ -1,4 +1,5 @@
 from cutter.cut import cut_img as cut
+from cutter.detail_cut import ct
 import renamer.main1
 import renamer.main2
 import shutil
@@ -114,7 +115,7 @@ def main(path: PathLike, position: tuple[int, int] | None=None, ifcolordiv=True,
 
     if ifcolordiv:          # 颜色分类
         if morecolor == False:
-            color_div.color_divider.main(path=path, area='area0.npy')       # 分类模特
+            # color_div.color_divider.main(path=path, area='area0.npy')       # 分类模特
             color_div.color_divider.main(path=path, area='area1.npy')       # 分类衣服
         else:
             color_div.color_divider.main_more_color(path_=path, area='area1.npy')       # 分类多颜色衣服
@@ -142,13 +143,15 @@ def main(path: PathLike, position: tuple[int, int] | None=None, ifcolordiv=True,
     for i in main_path:
         if filename in i:
             main_path_800.append(i)
-    # 将文件复制到path路径
+    # 将文件复制到path路径，将主图内的文件复制出两个作为根目录主图
     for num, i in enumerate(main_path_800):
         shutil.copy(i, path)
         file_path = os.path.join(path, os.path.basename(i))
         # 重命名文件
         os.rename(file_path, os.path.join(path, f'主图({num+1}).jpg'))
 
+    # 制作详情页
+    ct(path)
 
 if __name__ == '__main__':
     arg = argparse.ArgumentParser()
